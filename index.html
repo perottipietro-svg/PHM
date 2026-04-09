@@ -66,6 +66,9 @@
             <button onclick="switchView('home')" class="font-bold text-xl tracking-tight text-rose-600 focus:outline-none">
                 PHM <span class="text-blue-900 dark:text-blue-400">2026</span>
             </button>
+            <button onclick="toggleDark()" class="p-2 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 focus:outline-none" id="darkToggleBtn">
+                <i class="fas fa-moon text-sm" id="darkIcon"></i>
+            </button>
         </header>
 
         <!-- Contenuto Principale con margine inferiore per la Nav -->
@@ -75,7 +78,7 @@
             <div id="view-home" class="view space-y-6">
                 <section class="text-center py-6">
                     <h2 class="text-3xl font-extrabold mb-1 dark:text-white tracking-tight">Placentia Half Marathon</h2>
-                    <p class="text-gray-500 dark:text-gray-400 font-medium italic">29ª Edizione • Per l'UNICEF</p>
+                    <p class="text-gray-500 dark:text-gray-400 font-medium italic">29ª Edizione • Piacenza</p>
                 </section>
 
                 <div class="bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-3xl p-6 shadow-xl text-center relative overflow-hidden">
@@ -112,12 +115,10 @@
 
             <!-- Programma (Assicurati che sia leggibile al 100%) -->
             <div id="view-programma" class="view hidden space-y-6">
-                <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Programma Eventi</h2>
-                    <a href="https://www.placentiahalfmarathon.it/programma/" target="_blank" class="text-xs font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1">
-                        Programma ufficiale <i class="fas fa-external-link-alt"></i>
-                    </a>
-                </div>
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Programma Eventi</h2>
+                <a href="https://www.placentiahalfmarathon.it/programma/" target="_blank" class="flex items-center justify-center gap-2 bg-blue-900 dark:bg-blue-800 text-white py-3 rounded-2xl text-sm font-bold shadow-md w-full">
+                    <i class="fas fa-external-link-alt"></i> Programma Ufficiale
+                </a>
                 
                 <div class="space-y-10">
                     <!-- Venerdì -->
@@ -212,6 +213,9 @@
             <!-- Gara (Ripristinata completa) -->
             <div id="view-gara" class="view hidden space-y-4">
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Dettagli Gara</h2>
+                <a href="https://www.placentiahalfmarathon.it/29phm/percorso/" target="_blank" class="flex items-center justify-center gap-2 bg-blue-900 dark:bg-blue-800 text-white py-3 rounded-2xl text-sm font-bold shadow-md w-full">
+                    <i class="fas fa-external-link-alt"></i> Percorso Ufficiale
+                </a>
                 <div class="bg-blue-900 text-white p-5 rounded-3xl shadow-lg border border-blue-800">
                     <div class="grid grid-cols-2 gap-4">
                         <div>
@@ -223,9 +227,6 @@
                             <p class="text-sm font-bold">KM 12,650</p>
                         </div>
                     </div>
-                    <a href="https://www.placentiahalfmarathon.it/29phm/percorso/" target="_blank" class="mt-4 flex items-center justify-center gap-2 bg-white/20 py-2 rounded-xl text-xs font-bold border border-white/30">
-                        <i class="fas fa-map-marked-alt"></i> Vedi Percorso Ufficiale
-                    </a>
                 </div>
 
                 <!-- Pacers -->
@@ -256,11 +257,79 @@
             <!-- Iniziative -->
             <div id="view-iniziative" class="view hidden space-y-4">
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Iniziative</h2>
+                <a href="https://www.placentiahalfmarathon.it/iniziative/" target="_blank" class="flex items-center justify-center gap-2 bg-blue-900 dark:bg-blue-800 text-white py-3 rounded-2xl text-sm font-bold shadow-md w-full">
+                    <i class="fas fa-external-link-alt"></i> Iniziative Ufficiali
+                </a>
+
                 <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex gap-3">
                     <div class="bg-rose-100 dark:bg-rose-900/30 p-3 rounded-xl text-rose-600 shrink-0"><i class="fas fa-hand-holding-heart"></i></div>
                     <div>
                         <h4 class="font-bold text-sm">Relay for Ronald</h4>
-                        <p class="text-[11px] text-gray-500 mt-1">Staffetta solidale per Casa Ronald McDonald Milano.</p>
+                        <p class="text-[11px] text-gray-500 mt-1">Staffetta solidale per Casa Ronald McDonald Milano. Corri in squadra e sostieni le famiglie dei bambini malati.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex gap-3">
+                    <div class="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-xl text-blue-600 shrink-0"><i class="fas fa-child"></i></div>
+                    <div>
+                        <h4 class="font-bold text-sm">Minimaratona Pedibus (UNICEF)</h4>
+                        <p class="text-[11px] text-gray-500 mt-1">Dom 10 maggio, ore 09:45 · Pubblico Passeggio. Corsa non competitiva per bambini in sostegno all'UNICEF.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex gap-3">
+                    <div class="bg-amber-100 dark:bg-amber-900/30 p-3 rounded-xl text-amber-600 shrink-0"><i class="fas fa-walking"></i></div>
+                    <div>
+                        <h4 class="font-bold text-sm">Camminata delle Associazioni</h4>
+                        <p class="text-[11px] text-gray-500 mt-1">Dom 10 maggio, ore 09:45 · Pubblico Passeggio. Passeggiata aperta a tutte le associazioni del territorio.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex gap-3">
+                    <div class="bg-green-100 dark:bg-green-900/30 p-3 rounded-xl text-green-600 shrink-0"><i class="fas fa-heartbeat"></i></div>
+                    <div>
+                        <h4 class="font-bold text-sm">100% Progetto Vita</h4>
+                        <p class="text-[11px] text-gray-500 mt-1">Sab 9 maggio, ore 15:00 · Piazza Cavalli. Gara aziendale con defibrillatori e formazione al primo soccorso.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex gap-3">
+                    <div class="bg-teal-100 dark:bg-teal-900/30 p-3 rounded-xl text-teal-600 shrink-0"><i class="fas fa-landmark"></i></div>
+                    <div>
+                        <h4 class="font-bold text-sm">Scopri Piacenza</h4>
+                        <p class="text-[11px] text-gray-500 mt-1">Sab 9 maggio, ore 15:00 · Centro storico. Passeggiata guidata dal Touring Club Italiano: San Francesco, Duomo, Palazzo Farnese, San Sisto.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex gap-3">
+                    <div class="bg-red-100 dark:bg-red-900/30 p-3 rounded-xl text-red-600 shrink-0"><i class="fas fa-user-shield"></i></div>
+                    <div>
+                        <h4 class="font-bold text-sm">Salvati Salvatori</h4>
+                        <p class="text-[11px] text-gray-500 mt-1">Dom 10 maggio. 21 persone salvate da un arresto cardiaco corrono fianco a fianco con i loro soccorritori, 1 km ciascuno. In collaborazione con Progetto Vita.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex gap-3">
+                    <div class="bg-indigo-100 dark:bg-indigo-900/30 p-3 rounded-xl text-indigo-600 shrink-0"><i class="fas fa-medal"></i></div>
+                    <div>
+                        <h4 class="font-bold text-sm">Campionato Italiano Veterani Sportivi</h4>
+                        <p class="text-[11px] text-gray-500 mt-1">Dom 10 maggio. Campionato UNVS di mezzamaratona integrato nella PHM, per atleti veterani con classifiche per categoria d'età.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex gap-3">
+                    <div class="bg-yellow-100 dark:bg-yellow-900/30 p-3 rounded-xl text-yellow-600 shrink-0"><i class="fas fa-gamepad"></i></div>
+                    <div>
+                        <h4 class="font-bold text-sm">Giochi in Famiglia</h4>
+                        <p class="text-[11px] text-gray-500 mt-1">Sab 9 maggio, 15:30–18:45 · Arena Daturi. Giochi sportivi e ricreativi per bambini 3–12 anni, a cura di Fattore Famiglia. Iscrizione gratuita entro il 26 aprile.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex gap-3">
+                    <div class="bg-orange-100 dark:bg-orange-900/30 p-3 rounded-xl text-orange-600 shrink-0"><i class="fas fa-utensils"></i></div>
+                    <div>
+                        <h4 class="font-bold text-sm">Food & Beverage — Insieme per l'Hospice</h4>
+                        <p class="text-[11px] text-gray-500 mt-1">Ven–Dom · Arena Daturi. Stand gastronomico a cura dell'Associazione Insieme per l'Hospice ETS. Il ricavato va a La Casa di Iris, hospice territoriale di Piacenza.</p>
                     </div>
                 </div>
             </div>
@@ -268,11 +337,39 @@
             <!-- Info / Logistica -->
             <div id="view-info" class="view hidden space-y-4">
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Logistica</h2>
-                <div class="bg-white dark:bg-gray-800 p-5 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 space-y-4">
-                    <h4 class="font-bold text-blue-700 text-sm uppercase tracking-wide">Arena Daturi</h4>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">Palazzo Farnese. Centro Maratona per ritiro pettorali e deposito borse.</p>
-                    <a href="https://www.placentiahalfmarathon.it/" target="_blank" class="block w-full text-center bg-gray-100 dark:bg-gray-700 py-3 rounded-2xl text-xs font-bold">Sito Ufficiale <i class="fas fa-external-link-alt ml-1"></i></a>
+                <a href="https://www.placentiahalfmarathon.it/" target="_blank" class="flex items-center justify-center gap-2 bg-blue-900 dark:bg-blue-800 text-white py-3 rounded-2xl text-sm font-bold shadow-md w-full">
+                    <i class="fas fa-external-link-alt"></i> Sito Ufficiale PHM
+                </a>
+
+                <div class="bg-white dark:bg-gray-800 p-5 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 space-y-3">
+                    <h4 class="font-bold text-blue-700 dark:text-blue-400 text-sm uppercase tracking-wide flex items-center gap-2"><i class="fas fa-map-marker-alt"></i> Centro Maratona — Arena Daturi</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Piazza Cittadella, Piacenza (vicino Palazzo Farnese).<br>Ritiro pettorali, deposito borse, info point.</p>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div class="bg-gray-50 dark:bg-gray-700 p-2 rounded-xl">
+                            <p class="font-bold text-gray-700 dark:text-gray-200">Sab 9 maggio</p>
+                            <p class="text-gray-500">Apertura ore 15:00</p>
+                        </div>
+                        <div class="bg-gray-50 dark:bg-gray-700 p-2 rounded-xl">
+                            <p class="font-bold text-gray-700 dark:text-gray-200">Dom 10 maggio</p>
+                            <p class="text-gray-500">Apertura ore 07:00</p>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="bg-white dark:bg-gray-800 p-5 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 space-y-3">
+                    <h4 class="font-bold text-blue-700 dark:text-blue-400 text-sm uppercase tracking-wide flex items-center gap-2"><i class="fas fa-flag"></i> Partenza & Arrivo</h4>
+                    <div class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                        <p><span class="font-semibold text-gray-800 dark:text-white">Partenza:</span> Via Cavour, ore 09:30</p>
+                        <p><span class="font-semibold text-gray-800 dark:text-white">Arrivo:</span> Piazza Cavalli</p>
+                        <p><span class="font-semibold text-gray-800 dark:text-white">Cambio relay:</span> km 12,650</p>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 p-5 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 space-y-3">
+                    <h4 class="font-bold text-blue-700 dark:text-blue-400 text-sm uppercase tracking-wide flex items-center gap-2"><i class="fas fa-car"></i> Come arrivare</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Piacenza è raggiungibile in autostrada (A1 uscita Piacenza Nord o Sud) e in treno dalla stazione centrale, a pochi minuti a piedi dall'area gara.</p>
+                </div>
+
             </div>
 
 
@@ -293,6 +390,10 @@
                     <i class="fas fa-route text-lg"></i>
                     <span class="text-[9px] font-bold">Gara</span>
                 </button>
+                <button onclick="switchView('iniziative')" class="nav-btn flex-1 flex flex-col items-center gap-1 py-1 text-gray-400" id="nav-iniziative">
+                    <i class="fas fa-star text-lg"></i>
+                    <span class="text-[9px] font-bold">Iniziative</span>
+                </button>
                 <button onclick="switchView('info')" class="nav-btn flex-1 flex flex-col items-center gap-1 py-1 text-gray-400" id="nav-info">
                     <i class="fas fa-info-circle text-lg"></i>
                     <span class="text-[9px] font-bold">Info</span>
@@ -303,6 +404,13 @@
     </div>
 
     <script>
+        function toggleDark() {
+            const html = document.documentElement;
+            const icon = document.getElementById('darkIcon');
+            html.classList.toggle('dark');
+            icon.className = html.classList.contains('dark') ? 'fas fa-sun text-sm' : 'fas fa-moon text-sm';
+        }
+
         function switchView(viewId) {
             document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
             document.getElementById(`view-${viewId}`).classList.remove('hidden');
@@ -332,12 +440,19 @@
             const paceSec = Math.round(paceSecPerKm % 60).toString().padStart(2, '0');
             const at5k = totalSeconds * (5 / dist);
             const at10k = totalSeconds * (10 / dist);
+            const atRelay = totalSeconds * (12.650 / dist);
+            const at15k = totalSeconds * (15 / dist);
+            const at20k = totalSeconds * (20 / dist);
             const fmt = s => `${Math.floor(s/3600)}:${Math.floor((s%3600)/60).toString().padStart(2,'0')}:${Math.round(s%60).toString().padStart(2,'0')}`;
             resDiv.innerText =
-                `Ritmo medio: ${paceMin}:${paceSec} /km\n` +
-                `Ai 5 km:     ${fmt(at5k)}\n` +
-                `Ai 10 km:    ${fmt(at10k)}\n` +
-                `Arrivo:      ${time}`;
+                `Ritmo medio:    ${paceMin}:${paceSec} /km\n\n` +
+                `Ai 5 km:        ${fmt(at5k)}\n` +
+                `Ai 10 km:       ${fmt(at10k)}\n` +
+                `Cambio relay:   ${fmt(atRelay)}  (km 12.65)\n` +
+                `Ai 15 km:       ${fmt(at15k)}\n` +
+                `Ai 20 km:       ${fmt(at20k)}\n` +
+                `──────────────────────\n` +
+                `Arrivo:         ${time}`;
         }
 
         function updateCountdown() {
