@@ -78,9 +78,14 @@
             <button onclick="switchView('home')" class="font-bold text-xl tracking-tight text-rose-600 focus:outline-none">
                 PHM <span class="text-blue-900 dark:text-blue-400">2026</span>
             </button>
-            <button onclick="toggleDark()" class="p-2 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 focus:outline-none" id="darkToggleBtn">
-                <i class="fas fa-moon text-sm" id="darkIcon"></i>
-            </button>
+            <div class="flex items-center gap-2">
+                <button onclick="shareApp()" class="p-2 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 focus:outline-none" title="Condividi">
+                    <i class="fas fa-share-alt text-sm"></i>
+                </button>
+                <button onclick="toggleDark()" class="p-2 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 focus:outline-none" id="darkToggleBtn">
+                    <i class="fas fa-moon text-sm" id="darkIcon"></i>
+                </button>
+            </div>
         </header>
 
         <!-- Contenuto Principale con margine inferiore per la Nav -->
@@ -126,6 +131,12 @@
 
                 <a href="https://www.endu.net/it/events/placentia-half-marathon/entry/verify" target="_blank" class="card flex items-center justify-center gap-3 bg-gradient-to-r from-rose-600 to-rose-500 text-white py-4 rounded-3xl shadow-lg font-bold text-base w-full">
                     <i class="fas fa-check-circle text-xl"></i> Verifica Iscrizione
+                </a>
+                <a href="https://www.placentiahalfmarathon.it/foto/" target="_blank" class="card flex items-center justify-center gap-3 bg-gradient-to-r from-blue-700 to-blue-600 text-white py-4 rounded-3xl shadow-lg font-bold text-base w-full">
+                    <i class="fas fa-camera text-xl"></i> Le tue foto
+                </a>
+                <a href="https://www.youruniform.shop/l/placentiahalfmarathon/" target="_blank" class="card flex items-center justify-center gap-3 bg-gradient-to-r from-amber-500 to-amber-400 text-white py-4 rounded-3xl shadow-lg font-bold text-base w-full">
+                    <i class="fas fa-shopping-bag text-xl"></i> Store PHM
                 </a>
             </div>
 
@@ -440,6 +451,21 @@
     </div>
 
     <script>
+        function shareApp() {
+            const data = {
+                title: '29ª Placentia Half Marathon',
+                text: 'Programma, percorso, ritmi e iniziative della 29ª PHM — tutto in un\'app!',
+                url: 'https://www.placentiahalfmarathon.it/app-29-phm/'
+            };
+            if (navigator.share) {
+                navigator.share(data);
+            } else {
+                navigator.clipboard.writeText(data.url).then(() => {
+                    alert('Link copiato negli appunti!');
+                });
+            }
+        }
+
         function toggleDark() {
             const html = document.documentElement;
             const icon = document.getElementById('darkIcon');
