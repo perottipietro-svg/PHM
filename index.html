@@ -452,18 +452,33 @@
 
     <script>
         function shareApp() {
+            const url = 'https://www.placentiahalfmarathon.it/app-29-phm/';
             const data = {
                 title: '29ª Placentia Half Marathon',
                 text: 'Programma, percorso, ritmi e iniziative della 29ª PHM — tutto in un\'app!',
-                url: 'https://www.placentiahalfmarathon.it/app-29-phm/'
+                url: url
             };
             if (navigator.share) {
-                navigator.share(data);
-            } else {
-                navigator.clipboard.writeText(data.url).then(() => {
+                navigator.share(data).catch(() => {});
+            } else if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(() => {
                     alert('Link copiato negli appunti!');
-                });
+                }).catch(() => copyFallback(url));
+            } else {
+                copyFallback(url);
             }
+        }
+
+        function copyFallback(url) {
+            const el = document.createElement('textarea');
+            el.value = url;
+            el.style.position = 'fixed';
+            el.style.opacity = '0';
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            alert('Link copiato negli appunti!');
         }
 
         function toggleDark() {
