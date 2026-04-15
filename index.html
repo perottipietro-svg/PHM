@@ -17,6 +17,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="PHM 2026">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Leaflet.js per mappa interattiva -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -322,6 +323,15 @@
                             <i class="fas fa-directions text-blue-500"></i> Naviga verso l'Arrivo con Google Maps
                         </a>
                     </div>
+                </div>
+
+                <!-- Altimetria -->
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700">
+                    <h3 class="font-bold text-sm text-gray-700 dark:text-gray-200 flex items-center gap-2 mb-1">
+                        <i class="fas fa-mountain text-blue-500"></i> Altimetria
+                    </h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">Dislivello: +27m / +54m · Percorso pianeggiante</p>
+                    <canvas id="elevChart" height="140"></canvas>
                 </div>
 
                 <!-- Navigazione accompagnatori -->
@@ -667,6 +677,60 @@
             phmMap.fitBounds(L.polyline(routeCoords).getBounds(), {padding: [20,20]});
         }
 
+
+        // Altimetria
+        function initElevChart() {
+            const elevLabels = [0.0, 0.11, 0.22, 0.31, 0.41, 0.5, 0.58, 0.67, 0.73, 0.84, 0.94, 1.04, 1.14, 1.21, 1.32, 1.43, 1.53, 1.64, 1.76, 1.85, 1.93, 2.02, 2.11, 2.21, 2.31, 2.42, 2.52, 2.63, 2.73, 2.84, 2.95, 3.06, 3.17, 3.28, 3.38, 3.48, 3.57, 3.65, 3.76, 3.86, 3.95, 4.05, 4.14, 4.24, 4.33, 4.43, 4.54, 4.62, 4.69, 4.79, 4.88, 4.96, 5.05, 5.16, 5.24, 5.31, 5.42, 5.52, 5.62, 5.71, 5.8, 5.91, 6.01, 6.12, 6.23, 6.33, 6.43, 6.52, 6.63, 6.72, 6.81, 6.91, 7.0, 7.09, 7.18, 7.26, 7.35, 7.44, 7.52, 7.61, 7.7, 7.79, 7.9, 8.0, 8.09, 8.18, 8.27, 8.37, 8.45, 8.54, 8.63, 8.72, 8.81, 8.9, 8.99, 9.09, 9.19, 9.29, 9.39, 9.48, 9.57, 9.66, 9.76, 9.85, 9.94, 10.04, 10.13, 10.23, 10.33, 10.43, 10.55, 10.63, 10.72, 10.82, 10.93, 11.03, 11.12, 11.21, 11.3, 11.39, 11.5, 11.59, 11.7, 11.79, 11.9, 12.0, 12.07, 12.17, 12.27, 12.38, 12.48, 12.59, 12.69, 12.79, 12.88, 12.97, 13.06, 13.16, 13.26, 13.36, 13.47, 13.56, 13.66, 13.76, 13.86, 13.96, 14.05, 14.14, 14.24, 14.35, 14.44, 14.53, 14.64, 14.73, 14.81, 14.92, 15.01, 15.11, 15.2, 15.28, 15.38, 15.47, 15.58, 15.68, 15.79, 15.9, 16.0, 16.08, 16.18, 16.28, 16.37, 16.46, 16.56, 16.65, 16.74, 16.84, 16.94, 17.03, 17.12, 17.23, 17.32, 17.41, 17.5, 17.6, 17.71, 17.79, 17.91, 17.99, 18.08, 18.16, 18.26, 18.36, 18.46, 18.55, 18.65, 18.76, 18.86, 18.95, 19.05, 19.15, 19.25, 19.35, 19.46, 19.56, 19.67, 19.75, 19.87, 19.97, 20.07, 20.18, 20.29, 20.39, 20.49];
+const elevData = [40.0, 39.5, 39.1, 37.1, 34.7, 34.7, 35.2, 35.7, 35.7, 36.2, 38.1, 39.5, 42.0, 41.5, 40.0, 38.6, 39.5, 39.1, 38.6, 39.5, 39.1, 40.0, 40.0, 40.5, 41.5, 43.4, 44.4, 44.8, 45.3, 46.3, 47.2, 47.7, 48.2, 47.7, 47.7, 46.3, 45.3, 42.4, 42.0, 42.0, 41.0, 41.0, 42.9, 42.4, 42.4, 41.0, 41.0, 40.0, 40.5, 39.1, 38.1, 38.6, 38.6, 36.7, 34.7, 34.3, 32.3, 33.8, 32.8, 32.8, 33.8, 27.1, 33.3, 33.3, 38.1, 39.1, 38.6, 38.1, 38.1, 38.1, 38.6, 39.1, 38.6, 38.6, 38.1, 38.1, 38.6, 38.6, 38.6, 38.1, 39.1, 38.6, 38.6, 39.1, 39.1, 39.1, 39.1, 39.1, 39.1, 38.6, 38.6, 39.1, 38.6, 38.6, 38.6, 39.1, 39.1, 39.1, 39.5, 39.5, 41.0, 40.0, 39.5, 40.0, 39.5, 40.0, 40.0, 40.5, 40.0, 40.0, 40.0, 43.9, 49.2, 44.8, 41.0, 41.0, 42.0, 41.5, 42.0, 42.4, 42.9, 40.0, 38.6, 37.1, 35.7, 40.0, 40.5, 40.5, 42.0, 43.4, 43.4, 42.9, 42.9, 43.9, 45.3, 44.8, 45.8, 45.8, 47.2, 46.8, 48.2, 48.7, 50.1, 50.6, 49.6, 49.6, 50.1, 49.6, 50.1, 50.6, 51.1, 51.1, 52.0, 52.0, 53.0, 53.5, 53.0, 54.0, 53.5, 53.5, 52.5, 52.0, 52.0, 51.1, 51.1, 50.6, 50.1, 51.6, 50.6, 50.6, 50.1, 49.6, 49.6, 48.7, 47.7, 47.7, 48.2, 47.2, 46.8, 46.3, 45.3, 45.3, 45.3, 45.8, 46.3, 45.3, 44.8, 44.8, 45.3, 44.8, 45.8, 46.3, 48.2, 49.2, 50.6, 51.1, 51.6, 52.5, 53.0, 54.0, 54.0, 54.0, 54.5, 54.0, 52.0, 50.1, 48.2, 48.2, 48.2, 47.7, 49.2, 48.7, 48.7];
+            const isDark = document.documentElement.classList.contains('dark');
+            const gridColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
+            const textColor = isDark ? '#9ca3af' : '#6b7280';
+            const ctx = document.getElementById('elevChart').getContext('2d');
+            const grad = ctx.createLinearGradient(0, 0, 0, 200);
+            grad.addColorStop(0, 'rgba(225,29,72,0.35)');
+            grad.addColorStop(1, 'rgba(225,29,72,0.02)');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: elevLabels,
+                    datasets: [{
+                        data: elevData,
+                        borderColor: '#e11d48',
+                        borderWidth: 2,
+                        backgroundColor: grad,
+                        fill: true,
+                        pointRadius: 0,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                title: ctx => ctx[0].label + ' km',
+                                label: ctx => ctx.parsed.y + ' m'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: textColor, maxTicksLimit: 8,
+                                callback: v => elevLabels[v] % 5 === 0 ? elevLabels[v] + ' km' : ''
+                            },
+                            grid: { color: gridColor }
+                        },
+                        y: {
+                            min: 20, max: 60,
+                            ticks: { color: textColor, callback: v => v + 'm', stepSize: 10 },
+                            grid: { color: gridColor }
+                        }
+                    }
+                }
+            });
+        }
         function switchView(viewId) {
             document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
             document.getElementById(`view-${viewId}`).classList.remove('hidden');
