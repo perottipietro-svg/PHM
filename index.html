@@ -737,9 +737,13 @@ const elevData = [40.0, 39.5, 39.1, 37.1, 34.7, 34.7, 35.2, 35.7, 35.7, 36.2, 38
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('nav-active'));
             document.getElementById(`nav-${viewId}`).classList.add('nav-active');
             window.scrollTo(0,0);
-            // Inizializza mappa quando si apre la sezione Gara
+            // Inizializza mappa e grafico quando si apre la sezione Gara
             if (viewId === 'gara') {
                 setTimeout(initPHMMap, 100);
+                if (!window._elevChartDone) {
+                    setTimeout(initElevChart, 150);
+                    window._elevChartDone = true;
+                }
             }
         }
 
