@@ -331,7 +331,9 @@
                         <i class="fas fa-mountain text-blue-500"></i> Altimetria
                     </h3>
                     <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">Dislivello: +27m / +54m · Percorso pianeggiante</p>
-                    <canvas id="elevChart" height="140"></canvas>
+                    <div style="position:relative; height:140px;">
+                        <canvas id="elevChart"></canvas>
+                    </div>
                 </div>
 
                 <!-- Navigazione accompagnatori -->
@@ -705,6 +707,7 @@ const elevData = [40.0, 39.5, 39.1, 37.1, 34.7, 34.7, 35.2, 35.7, 35.7, 36.2, 38
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
                     plugins: {
                         legend: { display: false },
                         tooltip: {
@@ -723,7 +726,7 @@ const elevData = [40.0, 39.5, 39.1, 37.1, 34.7, 34.7, 35.2, 35.7, 35.7, 36.2, 38
                             grid: { color: gridColor }
                         },
                         y: {
-                            min: 20, max: 60,
+                            min: 0, max: 100,
                             ticks: { color: textColor, callback: v => v + 'm', stepSize: 10 },
                             grid: { color: gridColor }
                         }
@@ -803,7 +806,9 @@ const elevData = [40.0, 39.5, 39.1, 37.1, 34.7, 34.7, 35.2, 35.7, 35.7, 36.2, 38
         window.onload = () => {
             switchView('home');
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js');
+                navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).then(reg => {
+                    reg.update();
+                });
             }
         };
     </script>

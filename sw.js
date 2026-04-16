@@ -1,4 +1,4 @@
-const CACHE_NAME = 'phm-2026-v1';
+const CACHE_NAME = 'phm-2026-v2';
 const ASSETS = [
   './index.html',
   './manifest.json',
@@ -23,7 +23,15 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
-  e.respondWith(
-    caches.match(e.request).then(cached => cached || fetch(e.request))
-  );
+  const url = new URL(e.request.url);
+  // Network-first per HTML: scarica sempre la versione aggiornata
+  if (e.request.destination === 'document' || url.pathname.endsWith('.html') || url.pathname.endsWith('/')) {
+    e.respondWith(
+      fetch(e.request).catch(() => caches.match(e.request))
+    );
+  } else {
+    e.respondWith(
+      caches.match(e.request).then(cached => cached || fetch(e.request))
+    );
+  }
 });
