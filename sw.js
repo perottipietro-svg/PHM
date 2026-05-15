@@ -1,4 +1,4 @@
-const CACHE_NAME = 'phm-2026-v3';
+const CACHE_NAME = 'phm-2027-v1';
 const ASSETS = [
   './index.html',
   './manifest.json',

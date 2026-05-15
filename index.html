@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PHM Companion 2026</title>
-    <meta property="og:title" content="PHM Companion 2026">
-    <meta property="og:description" content="L'app ufficiale della 29ª Placentia Half Marathon — programma, percorso, ritmi e iniziative.">
+    <title>PHM Companion 2027</title>
+    <meta property="og:title" content="PHM Companion 2027">
+    <meta property="og:description" content="L'app ufficiale della 30ª Placentia Half Marathon — programma, percorso, ritmi e iniziative.">
     <meta property="og:image" content="https://perottipietro-svg.github.io/PHM/icon-512.png">
     <meta property="og:url" content="https://perottipietro-svg.github.io/PHM/">
     <meta property="og:type" content="website">
@@ -15,7 +15,7 @@
     <link rel="apple-touch-icon" href="icon-192.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="PHM 2026">
+    <meta name="apple-mobile-web-app-title" content="PHM 2027">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -131,7 +131,7 @@
         <!-- Header -->
         <header class="sticky top-0 z-40 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 px-4 py-3 flex justify-between items-center shadow-sm">
             <button onclick="switchView('home')" class="font-bold text-xl tracking-tight text-rose-600 focus:outline-none">
-                PHM <span class="text-blue-900 dark:text-blue-400">2026</span>
+                PHM <span class="text-blue-900 dark:text-blue-400">2027</span>
             </button>
             <div class="flex items-center gap-2">
                 <button onclick="shareApp()" class="p-2 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 focus:outline-none" title="Condividi">
@@ -150,7 +150,7 @@
             <div id="view-home" class="view space-y-6">
                 <section class="text-center py-6">
                     <h2 class="text-3xl font-extrabold mb-1 dark:text-white tracking-tight">Placentia Half Marathon</h2>
-                    <p class="text-gray-500 dark:text-gray-400 font-medium italic">29ª Edizione • Piacenza</p>
+                    <p class="text-gray-500 dark:text-gray-400 font-medium italic">30ª Edizione • Piacenza</p>
                 </section>
 
                 <div class="bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-3xl p-6 shadow-xl text-center relative overflow-hidden">
@@ -184,120 +184,62 @@
                     </button>
                 </div>
 
-                <a href="https://www.placentiahalfmarathon.it/29phm/iscrizioni/" target="_blank" class="card flex items-center justify-center gap-3 bg-gradient-to-r from-green-600 to-green-500 text-white py-4 rounded-3xl shadow-lg font-bold text-base w-full">
-                    <i class="fas fa-pencil-alt text-xl"></i> Iscriviti ora
-                </a>
-                <a href="https://www.endu.net/it/events/placentia-half-marathon/entry/verify" target="_blank" class="card flex items-center justify-center gap-3 bg-gradient-to-r from-rose-600 to-rose-500 text-white py-4 rounded-3xl shadow-lg font-bold text-base w-full">
-                    <i class="fas fa-check-circle text-xl"></i> Verifica Iscrizione
-                </a>
-                <a href="https://www.placentiahalfmarathon.it/foto/" target="_blank" class="card flex items-center justify-center gap-3 bg-gradient-to-r from-blue-700 to-blue-600 text-white py-4 rounded-3xl shadow-lg font-bold text-base w-full">
-                    <i class="fas fa-camera text-xl"></i> Le tue foto
+                <div class="flex flex-col items-center justify-center gap-1 bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 py-4 rounded-3xl w-full">
+                    <div class="flex items-center gap-2 font-bold text-base"><i class="fas fa-lock text-lg"></i> Iscrizioni chiuse</div>
+                    <span class="text-xs">Riapertura prevista fine ottobre</span>
+                </div>
+                <a href="https://www.endu.net/it/events/placentia-half-marathon/results/2026" target="_blank" class="card flex items-center justify-center gap-3 bg-gradient-to-r from-rose-600 to-rose-500 text-white py-4 rounded-3xl shadow-lg font-bold text-base w-full">
+                    <i class="fas fa-trophy text-xl"></i> Classifica e Attestato
                 </a>
                 <a href="https://www.youruniform.shop/l/placentiahalfmarathon/" target="_blank" class="card flex items-center justify-center gap-3 bg-gradient-to-r from-amber-500 to-amber-400 text-white py-4 rounded-3xl shadow-lg font-bold text-base w-full">
                     <i class="fas fa-shopping-bag text-xl"></i> Store PHM
                 </a>
+
+                <!-- Social -->
+                <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 p-4">
+                    <p class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wide text-center mb-3">Seguici sui social</p>
+                    <div class="grid grid-cols-4 gap-3">
+                        <a href="https://www.facebook.com/placentiahalfmarathon/" target="_blank" class="flex flex-col items-center gap-1 p-3 bg-blue-600 text-white rounded-2xl">
+                            <i class="fab fa-facebook-f text-lg"></i>
+                            <span class="text-[9px] font-bold">Facebook</span>
+                        </a>
+                        <a href="https://www.instagram.com/placentiahalfmarathon/" target="_blank" class="flex flex-col items-center gap-1 p-3 text-white rounded-2xl" style="background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%)">
+                            <i class="fab fa-instagram text-lg"></i>
+                            <span class="text-[9px] font-bold">Instagram</span>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCb-t07aI887Nqt8kN7x0GqQ" target="_blank" class="flex flex-col items-center gap-1 p-3 bg-red-600 text-white rounded-2xl">
+                            <i class="fab fa-youtube text-lg"></i>
+                            <span class="text-[9px] font-bold">YouTube</span>
+                        </a>
+                        <a href="https://www.flickr.com/photos/placentiahalfmarathon/albums" target="_blank" class="flex flex-col items-center gap-1 p-3 bg-pink-500 text-white rounded-2xl">
+                            <i class="fab fa-flickr text-lg"></i>
+                            <span class="text-[9px] font-bold">Flickr</span>
+                        </a>
+                    </div>
+                </div>
             </div>
 
-            <!-- Programma (Assicurati che sia leggibile al 100%) -->
+            <!-- Programma -->
             <div id="view-programma" class="view hidden space-y-6">
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Programma Eventi</h2>
                 <a href="https://www.placentiahalfmarathon.it/programma/" target="_blank" class="flex items-center justify-center gap-2 bg-blue-900 dark:bg-blue-800 text-white py-3 rounded-2xl text-sm font-bold shadow-md w-full">
                     <i class="fas fa-external-link-alt"></i> Programma Ufficiale
                 </a>
-                
-                <div class="space-y-10">
-                    <!-- Venerdì -->
-                    <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700">
-                        <h3 class="text-lg font-bold text-blue-700 dark:text-blue-400 flex items-center gap-2 mb-4">
-                            <i class="fas fa-calendar-day"></i> VENERDÌ 8 maggio
-                        </h3>
-                        <div class="relative border-l-2 border-blue-300 dark:border-gray-700 ml-2 pl-6 space-y-2">
-                            <div class="relative py-1">
-                                <div class="timeline-dot bg-blue-500"></div>
-                                <p class="text-xs font-bold text-blue-500 uppercase tracking-tighter">19:00 - 24:00 · Arena Daturi</p>
-                                <p class="font-bold text-sm text-gray-900 dark:text-white">Stand, musica, food & beverages</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sabato -->
-                    <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700">
-                        <h3 class="text-lg font-bold text-blue-700 dark:text-blue-400 flex items-center gap-2 mb-4">
-                            <i class="fas fa-calendar-day"></i> SABATO 9 maggio
-                        </h3>
-                        <div class="relative border-l-2 border-rose-300 dark:border-gray-700 ml-2 pl-6 space-y-6">
-                            <div class="relative">
-                                <div class="timeline-dot bg-rose-500"></div>
-                                <p class="text-xs font-bold text-rose-500 uppercase tracking-tighter">15:00 · Piazza Cavalli</p>
-                                <p class="font-bold text-sm text-gray-900 dark:text-white">Camminata centro storico</p>
-                            </div>
-                            <div class="relative">
-                                <div class="timeline-dot bg-rose-500"></div>
-                                <p class="text-xs font-bold text-rose-500 uppercase tracking-tighter">15:00 · Arena Daturi</p>
-                                <p class="font-bold text-sm text-gray-900 dark:text-white">Apertura Centro Maratona</p>
-                            </div>
-                            <div class="relative">
-                                <div class="timeline-dot bg-rose-500"></div>
-                                <p class="text-xs font-bold text-rose-500 uppercase tracking-tighter">15:00 · Piazza Cavalli</p>
-                                <p class="font-bold text-sm text-gray-900 dark:text-white">100% Progetto Vita (aziende)</p>
-                            </div>
-                            <div class="relative">
-                                <div class="timeline-dot bg-rose-500"></div>
-                                <p class="text-xs font-bold text-rose-500 uppercase tracking-tighter">15:30 · Arena Daturi</p>
-                                <p class="font-bold text-sm text-gray-900 dark:text-white">Giochi in famiglia (bambini)</p>
-                            </div>
-                            <div class="relative">
-                                <div class="timeline-dot bg-rose-500"></div>
-                                <p class="text-xs font-bold text-rose-500 uppercase tracking-tighter">18:00 · Piazza Cavalli</p>
-                                <p class="font-bold text-sm text-gray-900 dark:text-white">Presentazione Top Runner & Pacer</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Domenica -->
-                    <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700">
-                        <h3 class="text-lg font-bold text-blue-700 dark:text-blue-400 flex items-center gap-2 mb-4">
-                            <i class="fas fa-flag-checkered"></i> DOMENICA 10 maggio
-                        </h3>
-                        <div class="relative border-l-2 border-blue-200 dark:border-gray-700 ml-2 pl-6 space-y-6">
-                            <div class="relative">
-                                <div class="timeline-dot bg-blue-800"></div>
-                                <p class="text-xs font-bold text-blue-800 dark:text-blue-400">07:00 · Arena Daturi</p>
-                                <p class="font-bold text-sm text-gray-900 dark:text-white">Riapertura Centro Maratona</p>
-                            </div>
-                            <div class="relative">
-                                <div class="timeline-dot bg-rose-600"></div>
-                                <p class="text-xs font-bold text-rose-600 italic">09:30 · Via Cavour</p>
-                                <p class="font-bold text-base text-rose-600 dark:text-rose-500 uppercase">29ª PHM Partenza</p>
-                            </div>
-                            <div class="relative">
-                                <div class="timeline-dot bg-rose-600"></div>
-                                <p class="text-xs font-bold text-rose-600 italic">09:30 · Via Cavour</p>
-                                <p class="font-bold text-sm text-gray-900 dark:text-white">Partenza Staffetta PHM</p>
-                            </div>
-                            <div class="relative">
-                                <div class="timeline-dot bg-blue-500"></div>
-                                <p class="text-xs font-bold text-blue-500 italic">09:45 · Pubblico Passeggio</p>
-                                <p class="font-bold text-sm text-gray-900 dark:text-white">Minimaratona Pedibus (UNICEF)</p>
-                            </div>
-                            <div class="relative">
-                                <div class="timeline-dot bg-blue-500"></div>
-                                <p class="text-xs font-bold text-blue-500 italic">09:45 · Pubblico Passeggio</p>
-                                <p class="font-bold text-sm text-gray-900 dark:text-white">Camminata associazioni</p>
-                            </div>
-                            <div class="relative">
-                                <div class="timeline-dot bg-rose-700"></div>
-                                <p class="text-xs font-bold text-rose-700">10:30 · Piazza Cavalli</p>
-                                <p class="font-bold text-sm text-gray-900 dark:text-white uppercase">Arrivi & Premiazioni PHM</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 text-center space-y-3">
+                    <i class="fas fa-calendar-alt text-4xl text-blue-300 dark:text-blue-700"></i>
+                    <h3 class="font-bold text-gray-800 dark:text-white text-lg">Programma in definizione</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Il programma della 30ª edizione sarà definito nelle prossime settimane.<br>Seguici sui social o visita il sito ufficiale per restare aggiornato.</p>
+                    <p class="text-xs font-bold text-rose-500 uppercase tracking-wide">Domenica 9 maggio 2027 · ore 09:30</p>
                 </div>
             </div>
 
-            <!-- Gara (Ripristinata completa) -->
+            <!-- Gara -->
             <div id="view-gara" class="view hidden space-y-4">
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Dettagli Gara</h2>
+                <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-300 dark:border-amber-700 rounded-2xl p-4 flex gap-3 items-start">
+                    <i class="fas fa-triangle-exclamation text-amber-500 mt-0.5 shrink-0"></i>
+                    <p class="text-sm text-amber-800 dark:text-amber-300"><strong>Percorso provvisorio:</strong> il tracciato della 30ª edizione sarà aggiornato e potrà subire lievi modifiche rispetto all'edizione precedente. La mappa e i dettagli definitivi saranno pubblicati nelle prossime settimane.</p>
+                </div>
 
                 <!-- Mappa interattiva percorso -->
                 <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
@@ -400,77 +342,11 @@
                 <a href="https://www.placentiahalfmarathon.it/distanze/" target="_blank" class="flex items-center justify-center gap-2 bg-blue-900 dark:bg-blue-800 text-white py-3 rounded-2xl text-sm font-bold shadow-md w-full">
                     <i class="fas fa-external-link-alt"></i> Iniziative Ufficiali
                 </a>
-
-                <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex gap-3">
-                    <div class="bg-rose-100 dark:bg-rose-900/30 p-3 rounded-xl text-rose-600 shrink-0"><i class="fas fa-hand-holding-heart"></i></div>
-                    <div>
-                        <h4 class="font-bold text-sm">Relay for Ronald</h4>
-                        <p class="text-[11px] text-gray-500 mt-1">Staffetta solidale per Casa Ronald McDonald Milano. Corri in squadra e sostieni le famiglie dei bambini malati.</p>
-                    </div>
-                </div>
-
-                <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex gap-3">
-                    <div class="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-xl text-blue-600 shrink-0"><i class="fas fa-child"></i></div>
-                    <div>
-                        <h4 class="font-bold text-sm">Minimaratona Pedibus (UNICEF)</h4>
-                        <p class="text-[11px] text-gray-500 mt-1">Dom 10 maggio, ore 09:45 · Pubblico Passeggio. Corsa non competitiva per bambini in sostegno all'UNICEF.</p>
-                    </div>
-                </div>
-
-                <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex gap-3">
-                    <div class="bg-amber-100 dark:bg-amber-900/30 p-3 rounded-xl text-amber-600 shrink-0"><i class="fas fa-walking"></i></div>
-                    <div>
-                        <h4 class="font-bold text-sm">Camminata delle Associazioni</h4>
-                        <p class="text-[11px] text-gray-500 mt-1">Dom 10 maggio, ore 09:45 · Pubblico Passeggio. Passeggiata aperta a tutte le associazioni del territorio.</p>
-                    </div>
-                </div>
-
-                <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex gap-3">
-                    <div class="bg-green-100 dark:bg-green-900/30 p-3 rounded-xl text-green-600 shrink-0"><i class="fas fa-heartbeat"></i></div>
-                    <div>
-                        <h4 class="font-bold text-sm">100% Progetto Vita</h4>
-                        <p class="text-[11px] text-gray-500 mt-1">Sab 9 maggio, ore 15:00 · Piazza Cavalli. Gara aziendale con defibrillatori e formazione al primo soccorso.</p>
-                    </div>
-                </div>
-
-                <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex gap-3">
-                    <div class="bg-teal-100 dark:bg-teal-900/30 p-3 rounded-xl text-teal-600 shrink-0"><i class="fas fa-landmark"></i></div>
-                    <div>
-                        <h4 class="font-bold text-sm">Scopri Piacenza</h4>
-                        <p class="text-[11px] text-gray-500 mt-1">Sab 9 maggio, ore 15:00 · Centro storico. Passeggiata guidata dal Touring Club Italiano: San Francesco, Duomo, Palazzo Farnese, San Sisto.</p>
-                    </div>
-                </div>
-
-                <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex gap-3">
-                    <div class="bg-red-100 dark:bg-red-900/30 p-3 rounded-xl text-red-600 shrink-0"><i class="fas fa-user-shield"></i></div>
-                    <div>
-                        <h4 class="font-bold text-sm">Salvati Salvatori</h4>
-                        <p class="text-[11px] text-gray-500 mt-1">Dom 10 maggio. 21 persone salvate da un arresto cardiaco corrono fianco a fianco con i loro soccorritori, 1 km ciascuno. In collaborazione con Progetto Vita.</p>
-                    </div>
-                </div>
-
-                <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex gap-3">
-                    <div class="bg-indigo-100 dark:bg-indigo-900/30 p-3 rounded-xl text-indigo-600 shrink-0"><i class="fas fa-medal"></i></div>
-                    <div>
-                        <h4 class="font-bold text-sm">Campionato Italiano Veterani Sportivi</h4>
-                        <p class="text-[11px] text-gray-500 mt-1">Dom 10 maggio. Campionato UNVS di mezzamaratona integrato nella PHM, per atleti veterani con classifiche per categoria d'età.</p>
-                    </div>
-                </div>
-
-                <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex gap-3">
-                    <div class="bg-yellow-100 dark:bg-yellow-900/30 p-3 rounded-xl text-yellow-600 shrink-0"><i class="fas fa-gamepad"></i></div>
-                    <div>
-                        <h4 class="font-bold text-sm">Giochi in Famiglia</h4>
-                        <p class="text-[11px] text-gray-500 mt-1">Sab 9 maggio, 15:30–18:45 · Arena Daturi. Giochi sportivi e ricreativi per bambini 3–12 anni, a cura di Fattore Famiglia. Iscrizione gratuita entro il 26 aprile.</p>
-                    </div>
-                </div>
-
-                <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex gap-3">
-                    <div class="bg-orange-100 dark:bg-orange-900/30 p-3 rounded-xl text-orange-600 shrink-0"><i class="fas fa-utensils"></i></div>
-                    <div>
-                        <h4 class="font-bold text-sm">Food & Beverage — Insieme per l'Hospice</h4>
-                        <p class="text-[11px] text-gray-500 mt-1">Ven–Dom · Arena Daturi. Stand gastronomico a cura dell'Associazione Insieme per l'Hospice ETS. Il ricavato va a La Casa di Iris, hospice territoriale di Piacenza.</p>
-                    </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 text-center space-y-3">
+                    <i class="fas fa-star text-4xl text-amber-300 dark:text-amber-700"></i>
+                    <h3 class="font-bold text-gray-800 dark:text-white text-lg">Iniziative in definizione</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Le iniziative della 30ª edizione saranno definite nelle prossime settimane.<br>Seguici sui social o visita il sito ufficiale per restare aggiornato.</p>
+                    <p class="text-xs font-bold text-rose-500 uppercase tracking-wide">Domenica 9 maggio 2027</p>
                 </div>
             </div>
 
@@ -486,11 +362,11 @@
                     <p class="text-sm text-gray-600 dark:text-gray-400">Piazza Cittadella, Piacenza (vicino Palazzo Farnese).<br>Ritiro pettorali, deposito borse, info point.</p>
                     <div class="grid grid-cols-2 gap-2 text-xs">
                         <div class="bg-gray-50 dark:bg-gray-700 p-2 rounded-xl">
-                            <p class="font-bold text-gray-700 dark:text-gray-200">Sab 9 maggio</p>
+                            <p class="font-bold text-gray-700 dark:text-gray-200">Sab 8 maggio</p>
                             <p class="text-gray-500">Apertura ore 15:00</p>
                         </div>
                         <div class="bg-gray-50 dark:bg-gray-700 p-2 rounded-xl">
-                            <p class="font-bold text-gray-700 dark:text-gray-200">Dom 10 maggio</p>
+                            <p class="font-bold text-gray-700 dark:text-gray-200">Dom 9 maggio</p>
                             <p class="text-gray-500">Apertura ore 07:00</p>
                         </div>
                     </div>
@@ -565,10 +441,10 @@
 
     <script>
         function shareApp() {
-            const url = 'https://www.placentiahalfmarathon.it/app-29-phm/';
+            const url = 'https://www.placentiahalfmarathon.it/app-30-phm/';
             const data = {
-                title: '29ª Placentia Half Marathon',
-                text: 'Programma, percorso, ritmi e iniziative della 29ª PHM — tutto in un\'app!',
+                title: '30ª Placentia Half Marathon',
+                text: 'Programma, percorso, ritmi e iniziative della 30ª PHM — tutto in un\'app!',
                 url: url
             };
             if (navigator.share) {
@@ -787,7 +663,7 @@ const elevData = [40.0, 39.5, 39.1, 37.1, 34.7, 34.7, 35.2, 35.7, 35.7, 36.2, 38
         }
 
         function updateCountdown() {
-            const target = new Date("May 10, 2026 09:30:00").getTime();
+            const target = new Date("May 9, 2027 09:30:00").getTime();
             const now = new Date().getTime();
             const diff = target - now;
             if (diff <= 0) {
