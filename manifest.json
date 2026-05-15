@@ -1,6 +1,6 @@
 {
-  "name": "PHM Companion 2027",
-  "short_name": "PHM 2027",
+  "name": "PHM Companion",
+  "short_name": "PHM",
   "description": "App ufficiale della 30ª Placentia Half Marathon",
   "start_url": "./index.html",
   "display": "standalone",
