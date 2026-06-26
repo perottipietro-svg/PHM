@@ -184,6 +184,15 @@
                     </button>
                 </div>
 
+                <button onclick="switchView('documenti')" class="card bg-white dark:bg-gray-800 p-5 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 flex items-center gap-4 w-full text-left">
+                    <i class="fas fa-file-alt text-2xl text-blue-500 shrink-0"></i>
+                    <div>
+                        <p class="font-bold text-gray-700 dark:text-gray-200">Documenti per partecipare</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Scopri cosa ti serve per iscriverti</p>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-300 ml-auto"></i>
+                </button>
+
                 <div class="flex flex-col items-center justify-center gap-1 bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 py-4 rounded-3xl w-full">
                     <div class="flex items-center gap-2 font-bold text-base"><i class="fas fa-lock text-lg"></i> Iscrizioni chiuse</div>
                     <span class="text-xs">Riapertura prevista fine ottobre</span>
@@ -408,6 +417,12 @@
 
             </div>
 
+            <!-- Documenti / Partecipazione -->
+            <div id="view-documenti" class="view hidden space-y-4">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Documenti per partecipare</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Rispondi alle domande per scoprire esattamente quali documenti ti servono per la <strong>21.097km PHM</strong>.</p>
+                <div id="wizard-container"></div>
+            </div>
 
         </main>
 
@@ -433,6 +448,10 @@
                 <button onclick="switchView('info')" class="nav-btn flex-1 flex flex-col items-center gap-1 py-1 text-gray-400" id="nav-info">
                     <i class="fas fa-info-circle text-lg"></i>
                     <span class="text-[9px] font-bold">Info</span>
+                </button>
+                <button onclick="switchView('documenti')" class="nav-btn flex-1 flex flex-col items-center gap-1 py-1 text-gray-400" id="nav-documenti">
+                    <i class="fas fa-file-alt text-lg"></i>
+                    <span class="text-[9px] font-bold">Iscriviti</span>
                 </button>
             </div>
         </nav>
@@ -624,7 +643,118 @@ const elevData = [40.0, 39.5, 39.1, 37.1, 34.7, 34.7, 35.2, 35.7, 35.7, 36.2, 38
                     window._elevChartDone = true;
                 }
             }
+            if (viewId === 'documenti') wizardReset();
         }
+
+        // === WIZARD DOCUMENTI ===
+        const wizardSteps = [
+            { id: 'eta', question: 'Hai compiuto 18 anni alla data della manifestazione?', info: 'La 21.097km richiede un\'età minima di 18 anni (entro il 9 maggio 2027)', type: 'yesno', yes: 'residenza', no: 'result_minore' },
+            { id: 'residenza', question: 'Sei residente in Italia?', type: 'yesno', yes: 'cittadinanza_res', no: 'cittadinanza_noRes' },
+            { id: 'cittadinanza_res', question: 'Sei cittadino italiano?', type: 'yesno', yes: 'fidal_itRes', no: 'fidal_strRes' },
+            { id: 'fidal_itRes', question: 'Hai la tessera FIDAL in corso di validità?', type: 'yesno', yes: 'result_fidal', no: 'result_runcard' },
+            { id: 'fidal_strRes', question: 'Hai la tessera FIDAL in corso di validità?', type: 'yesno', yes: 'result_fidal', no: 'fedEstera_res' },
+            { id: 'fedEstera_res', question: 'Hai la tessera della federazione di atletica del tuo paese in corso di validità?', type: 'yesno', yes: 'result_fedEstera_cert', no: 'result_runcard' },
+            { id: 'cittadinanza_noRes', question: 'Sei cittadino italiano?', type: 'yesno', yes: 'fidal_itNoRes', no: 'modo_noRes' },
+            { id: 'fidal_itNoRes', question: 'Hai la tessera FIDAL in corso di validità?', type: 'yesno', yes: 'result_fidal', no: 'result_runcard' },
+            { id: 'modo_noRes', question: 'Come vuoi partecipare?', type: 'choice', choices: [
+                { label: '🏅 Competitiva', sublabel: 'Gara ufficiale con classifica FIDAL', next: 'result_fedEstera_health' },
+                { label: '🎽 Turistico-sportiva', sublabel: 'Partecipazione non competitiva', next: 'result_runcard_health' }
+            ]}
+        ];
+
+        const wizardResults = {
+            result_minore: { ok: false, title: 'Non puoi partecipare', message: 'Per la 21.097km è obbligatorio aver compiuto 18 anni alla data della manifestazione (9 maggio 2027).', docs: [] },
+            result_fidal: { ok: true, title: 'Documenti necessari', docs: [
+                { icon: 'fa-id-card', color: 'blue', title: 'Tessera FIDAL', desc: 'In corso di validità' }
+            ]},
+            result_runcard: { ok: true, title: 'Documenti necessari', docs: [
+                { icon: 'fa-credit-card', color: 'green', title: 'RUNCARD', desc: 'In corso di validità' },
+                { icon: 'fa-stethoscope', color: 'rose', title: 'Certificato medico', desc: 'Idoneità agonistica per atletica leggera, valido in Italia', note: 'Non sono ammessi certificati diversi' }
+            ]},
+            result_fedEstera_cert: { ok: true, title: 'Documenti necessari', docs: [
+                { icon: 'fa-id-card', color: 'amber', title: 'Tessera federazione estera', desc: 'In corso di validità' },
+                { icon: 'fa-stethoscope', color: 'rose', title: 'Certificato medico', desc: 'Idoneità agonistica per atletica leggera, valido in Italia', note: 'Non sono ammessi certificati diversi' }
+            ]},
+            result_fedEstera_health: { ok: true, title: 'Documenti necessari', docs: [
+                { icon: 'fa-id-card', color: 'amber', title: 'Tessera federazione estera', desc: 'In corso di validità' },
+                { icon: 'fa-stethoscope', color: 'rose', title: 'Certificato medico', desc: 'Idoneità agonistica per atletica leggera, valido in Italia', note: 'Non sono ammessi certificati diversi' },
+                { icon: 'fa-file-medical', color: 'purple', title: 'Health Form', desc: 'Da compilare online al momento dell\'iscrizione' }
+            ]},
+            result_runcard_health: { ok: true, title: 'Documenti necessari', docs: [
+                { icon: 'fa-credit-card', color: 'green', title: 'RUNCARD', desc: 'In corso di validità' },
+                { icon: 'fa-file-medical', color: 'purple', title: 'Health Form', desc: 'Da compilare online al momento dell\'iscrizione' },
+                { icon: 'fa-file-signature', color: 'indigo', title: 'Liability Waiver Form', desc: 'Da compilare online al momento dell\'iscrizione' }
+            ]}
+        };
+
+        let wizardHistory = [];
+        let wizardCurrentStep = 'eta';
+
+        const docColors = {
+            blue:   'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700',
+            green:  'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-700',
+            rose:   'bg-rose-50 dark:bg-rose-900/20 border-rose-200 dark:border-rose-700',
+            amber:  'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-700',
+            purple: 'bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-700',
+            indigo: 'bg-indigo-50 dark:bg-indigo-900/20 border-indigo-200 dark:border-indigo-700'
+        };
+
+        function renderWizard() {
+            const container = document.getElementById('wizard-container');
+            if (!container) return;
+            if (wizardResults[wizardCurrentStep]) { renderWizardResult(container); return; }
+            const step = wizardSteps.find(s => s.id === wizardCurrentStep);
+            if (!step) return;
+            const backBtn = wizardHistory.length > 0 ? `<button onclick="wizardBack()" class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 font-semibold mb-2"><i class="fas fa-chevron-left"></i> Indietro</button>` : '';
+            let choicesHtml = '';
+            if (step.type === 'yesno') {
+                choicesHtml = `<div class="grid grid-cols-2 gap-3 mt-5">
+                    <button onclick="wizardAnswer('${step.yes}')" class="bg-green-500 text-white py-4 rounded-2xl font-bold text-lg active:scale-95 transition-transform">✓ Sì</button>
+                    <button onclick="wizardAnswer('${step.no}')" class="bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white py-4 rounded-2xl font-bold text-lg active:scale-95 transition-transform">✗ No</button>
+                </div>`;
+            } else {
+                choicesHtml = '<div class="space-y-3 mt-5">' + step.choices.map(c =>
+                    `<button onclick="wizardAnswer('${c.next}')" class="w-full bg-blue-50 dark:bg-blue-900/20 border-2 border-blue-200 dark:border-blue-700 text-left p-4 rounded-2xl active:scale-95 transition-transform">
+                        <div class="font-bold text-gray-800 dark:text-white">${c.label}</div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">${c.sublabel}</div>
+                    </button>`
+                ).join('') + '</div>';
+            }
+            container.innerHTML = `${backBtn}
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700">
+                    <span class="bg-blue-900 text-white text-xs font-bold px-3 py-1 rounded-full">Domanda ${wizardHistory.length + 1}</span>
+                    <p class="text-lg font-bold text-gray-800 dark:text-white leading-snug mt-4">${step.question}</p>
+                    ${step.info ? `<p class="text-xs text-amber-600 dark:text-amber-400 mt-2">⚠️ ${step.info}</p>` : ''}
+                    ${choicesHtml}
+                </div>`;
+        }
+
+        function renderWizardResult(container) {
+            const result = wizardResults[wizardCurrentStep];
+            const docsHtml = result.docs.map(doc =>
+                `<div class="flex gap-4 p-4 rounded-2xl border-2 ${docColors[doc.color]}">
+                    <i class="fas ${doc.icon} text-2xl mt-0.5 shrink-0 text-gray-600 dark:text-gray-300"></i>
+                    <div>
+                        <p class="font-bold text-gray-900 dark:text-white">${doc.title}</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">${doc.desc}</p>
+                        ${doc.note ? `<p class="text-xs font-semibold mt-1 text-rose-600 dark:text-rose-400">⚠️ ${doc.note}</p>` : ''}
+                    </div>
+                </div>`
+            ).join('');
+            container.innerHTML = `
+                <button onclick="wizardBack()" class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 font-semibold mb-2"><i class="fas fa-chevron-left"></i> Indietro</button>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 space-y-4">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">${result.ok ? '✅' : '🚫'} ${result.title}</h3>
+                    ${result.message ? `<p class="text-gray-600 dark:text-gray-400">${result.message}</p>` : ''}
+                    ${docsHtml}
+                </div>
+                <p class="text-xs text-gray-400 text-center mt-2">Per i dettagli ufficiali consulta il regolamento della manifestazione</p>
+                <button onclick="wizardReset()" class="w-full bg-blue-900 dark:bg-blue-800 text-white py-3 rounded-2xl font-bold mt-2"><i class="fas fa-redo mr-2"></i>Ricomincia</button>`;
+        }
+
+        function wizardAnswer(next) { wizardHistory.push(wizardCurrentStep); wizardCurrentStep = next; renderWizard(); }
+        function wizardBack() { if (wizardHistory.length > 0) { wizardCurrentStep = wizardHistory.pop(); renderWizard(); } }
+        function wizardReset() { wizardHistory = []; wizardCurrentStep = 'eta'; renderWizard(); }
 
         function selectPace(time) {
             document.getElementById('targetTime').value = time;
