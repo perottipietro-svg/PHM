@@ -667,10 +667,15 @@ const elevData = [40.0, 39.5, 39.1, 37.1, 34.7, 34.7, 35.2, 35.7, 35.7, 36.2, 38
             result_fidal: { ok: true, title: 'Documenti necessari', docs: [
                 { icon: 'fa-id-card', color: 'blue', title: 'Tessera FIDAL', desc: 'In corso di validità' }
             ]},
-            result_runcard: { ok: true, title: 'Documenti necessari', docs: [
-                { icon: 'fa-credit-card', color: 'green', title: 'RUNCARD', desc: 'In corso di validità' },
-                { icon: 'fa-stethoscope', color: 'rose', title: 'Certificato medico', desc: 'Idoneità agonistica per atletica leggera, valido in Italia', note: 'Non sono ammessi certificati diversi' }
-            ]},
+            result_runcard: { ok: true, title: 'Documenti necessari', twoOptions: true,
+                opt1: { label: 'Opzione A — RUNCARD', docs: [
+                    { icon: 'fa-credit-card', color: 'green', title: 'RUNCARD', desc: 'In corso di validità' },
+                    { icon: 'fa-stethoscope', color: 'rose', title: 'Certificato medico', desc: 'Idoneità agonistica per atletica leggera, valido in Italia', note: 'Non sono ammessi certificati diversi' }
+                ]},
+                opt2: { label: 'Opzione B — Tesseramento FIDAL', docs: [
+                    { icon: 'fa-id-card', color: 'blue', title: 'Tessera FIDAL', desc: 'Iscriviti a qualsiasi società affiliata FIDAL, inclusa ASD Placentia' }
+                ], link: { url: 'https://www.placentiahalfmarathon.it/asd-placentia-home/tesseramento/', text: 'Tesseramento ASD Placentia →' }}
+            },
             result_fedEstera_cert: { ok: true, title: 'Documenti necessari', docs: [
                 { icon: 'fa-id-card', color: 'amber', title: 'Tessera federazione estera', desc: 'In corso di validità' },
                 { icon: 'fa-stethoscope', color: 'rose', title: 'Certificato medico', desc: 'Idoneità agonistica per atletica leggera, valido in Italia', note: 'Non sono ammessi certificati diversi' }
@@ -729,9 +734,8 @@ const elevData = [40.0, 39.5, 39.1, 37.1, 34.7, 34.7, 35.2, 35.7, 35.7, 36.2, 38
                 </div>`;
         }
 
-        function renderWizardResult(container) {
-            const result = wizardResults[wizardCurrentStep];
-            const docsHtml = result.docs.map(doc =>
+        function renderDocList(docs) {
+            return docs.map(doc =>
                 `<div class="flex gap-4 p-4 rounded-2xl border-2 ${docColors[doc.color]}">
                     <i class="fas ${doc.icon} text-2xl mt-0.5 shrink-0 text-gray-600 dark:text-gray-300"></i>
                     <div>
@@ -741,12 +745,33 @@ const elevData = [40.0, 39.5, 39.1, 37.1, 34.7, 34.7, 35.2, 35.7, 35.7, 36.2, 38
                     </div>
                 </div>`
             ).join('');
+        }
+
+        function renderWizardResult(container) {
+            const result = wizardResults[wizardCurrentStep];
+            let bodyHtml;
+            if (result.twoOptions) {
+                const opt1Html = `
+                    <div class="space-y-2">
+                        <p class="text-xs font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400">${result.opt1.label}</p>
+                        ${renderDocList(result.opt1.docs)}
+                    </div>`;
+                const opt2Html = `
+                    <div class="space-y-2">
+                        <p class="text-xs font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400">${result.opt2.label}</p>
+                        ${renderDocList(result.opt2.docs)}
+                        ${result.opt2.link ? `<a href="${result.opt2.link.url}" target="_blank" class="flex items-center justify-center gap-2 bg-blue-900 dark:bg-blue-800 text-white py-3 rounded-2xl text-sm font-bold w-full mt-1">${result.opt2.link.text}</a>` : ''}
+                    </div>`;
+                bodyHtml = `<div class="border-b border-gray-100 dark:border-gray-700 pb-4">${opt1Html}</div><div class="pt-2">${opt2Html}</div>`;
+            } else {
+                bodyHtml = renderDocList(result.docs);
+            }
             container.innerHTML = `
                 <button onclick="wizardBack()" class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 font-semibold mb-2"><i class="fas fa-chevron-left"></i> Indietro</button>
                 <div class="bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 space-y-4">
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white">${result.ok ? '✅' : '🚫'} ${result.title}</h3>
                     ${result.message ? `<p class="text-gray-600 dark:text-gray-400">${result.message}</p>` : ''}
-                    ${docsHtml}
+                    ${bodyHtml}
                 </div>
                 <p class="text-xs text-gray-400 text-center mt-2">Per i dettagli ufficiali consulta il regolamento della manifestazione</p>
                 <button onclick="wizardReset()" class="w-full bg-blue-900 dark:bg-blue-800 text-white py-3 rounded-2xl font-bold mt-2"><i class="fas fa-redo mr-2"></i>Ricomincia</button>`;
