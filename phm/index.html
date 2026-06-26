@@ -655,7 +655,8 @@ const elevData = [40.0, 39.5, 39.1, 37.1, 34.7, 34.7, 35.2, 35.7, 35.7, 36.2, 38
             { id: 'fidal_strRes', question: 'Hai la tessera FIDAL in corso di validità?', type: 'yesno', yes: 'result_fidal', no: 'fedEstera_res' },
             { id: 'fedEstera_res', question: 'Hai la tessera della federazione di atletica del tuo paese in corso di validità?', type: 'yesno', yes: 'result_fedEstera_cert', no: 'result_runcard' },
             { id: 'cittadinanza_noRes', question: 'Sei cittadino italiano?', type: 'yesno', yes: 'fidal_itNoRes', no: 'modo_noRes' },
-            { id: 'fidal_itNoRes', question: 'Hai la tessera FIDAL in corso di validità?', type: 'yesno', yes: 'result_fidal', no: 'result_runcard' },
+            { id: 'fidal_itNoRes', question: 'Hai la tessera FIDAL in corso di validità?', type: 'yesno', yes: 'result_fidal', no: 'fedEstera_itNoRes' },
+            { id: 'fedEstera_itNoRes', question: 'Hai la tessera della federazione di atletica del paese in cui risiedi?', type: 'yesno', yes: 'result_fedEstera_cert', no: 'result_runcard' },
             { id: 'modo_noRes', question: 'Come vuoi partecipare?', type: 'choice', choices: [
                 { label: '🏅 Competitiva', sublabel: 'Gara ufficiale con classifica FIDAL', next: 'result_fedEstera_health' },
                 { label: '🎽 Turistico-sportiva', sublabel: 'Partecipazione non competitiva', next: 'result_runcard_health' }
