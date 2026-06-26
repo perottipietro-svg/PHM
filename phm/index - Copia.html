@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="it" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PHM Companion 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <style>
+        :root {
+            --phm-red: #e11d48;
+            --phm-blue: #1e3a8a;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
+        }
+        .dark body { background-color: #111827; }
+        .safe-area-bottom { padding-bottom: env(safe-area-inset-bottom); }
+        
+        .nav-active { 
+            color: var(--phm-blue) !important;
+            background-color: rgba(30, 58, 138, 0.05);
+            border-radius: 12px;
+        }
+        .dark .nav-active {
+            color: #60a5fa !important;
+            background-color: rgba(96, 165, 250, 0.1);
+        }
+        
+        .card { transition: transform 0.2s ease; }
+        .card:active { transform: scale(0.98); }
+        .view { animation: fadeIn 0.3s ease-out; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .timeline-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--phm-red);
+            border-radius: 50%;
+            position: absolute;
+            left: -28px;
+            top: 6px;
+        }
+        
+        #chatBox::-webkit-scrollbar { width: 4px; }
+        #chatBox::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
+
+    <div id="app" class="max-w-md mx-auto min-h-screen flex flex-col">
+        
+        <!-- Header -->
+        <header class="sticky top-0 z-40 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 px-4 py-3 flex justify-between items-center shadow-sm">
+            <button onclick="switchView('home')" class="font-bold text-xl tracking-tight text-rose-600 focus:outline-none">
+                PHM <span class="text-blue-900 dark:text-blue-400">2026</span>
+            </button>
+        </header>
+
+        <!-- Contenuto Principale con margine inferiore per la Nav -->
+        <main class="flex-grow p-4 pb-32">
+            
+            <!-- Home -->
+            <div id="view-home" class="view space-y-6">
+                <section class="text-center py-6">
+                    <h2 class="text-3xl font-extrabold mb-1 dark:text-white tracking-tight">Placentia Half Marathon</h2>
+                    <p class="text-gray-500 dark:text-gray-400 font-medium italic">29ª Edizione • Per l'UNICEF</p>
+                </section>
+
+                <div class="bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-3xl p-6 shadow-xl text-center relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10">
+                        <i class="fas fa-running text-6xl rotate-12"></i>
+                    </div>
+                    <p class="text-xs uppercase tracking-widest opacity-80 mb-4 font-bold">La sfida inizia tra</p>
+                    <div id="countdown" class="flex justify-center gap-4 text-2xl font-black">
+                        <div class="text-center w-16 bg-white/10 rounded-xl py-2"><span id="days">00</span><p class="text-[10px] uppercase font-normal">Giorni</p></div>
+                        <div class="text-center w-16 bg-white/10 rounded-xl py-2"><span id="hours">00</span><p class="text-[10px] uppercase font-normal">Ore</p></div>
+                        <div class="text-center w-16 bg-white/10 rounded-xl py-2"><span id="minutes">00</span><p class="text-[10px] uppercase font-normal">Min</p></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <button onclick="switchView('programma')" class="card bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col items-center gap-3">
+                        <i class="fas fa-calendar-alt text-2xl text-rose-500"></i>
+                        <span class="font-bold text-gray-700 dark:text-gray-200">Programma</span>
+                    </button>
+                    <button onclick="switchView('gara')" class="card bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col items-center gap-3">
+                        <i class="fas fa-route text-2xl text-blue-500"></i>
+                        <span class="font-bold text-gray-700 dark:text-gray-200">Percorso</span>
+                    </button>
+                    <button onclick="switchView('iniziative')" class="card bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col items-center gap-3">
+                        <i class="fas fa-star text-2xl text-amber-500"></i>
+                        <span class="font-bold text-gray-700 dark:text-gray-200">Iniziative</span>
+                    </button>
+                    <button onclick="switchView('info')" class="card bg-rose-600 text-white p-6 rounded-3xl shadow-lg flex flex-col items-center gap-3">
+                        <i class="fas fa-info-circle text-2xl"></i>
+                        <span class="font-bold">Info</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Programma (Assicurati che sia leggibile al 100%) -->
+            <div id="view-programma" class="view hidden space-y-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Programma Eventi</h2>
+                    <a href="https://www.placentiahalfmarathon.it/programma/" target="_blank" class="text-xs font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1">
+                        Programma ufficiale <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+                
+                <div class="space-y-10">
+                    <!-- Venerdì -->
+                    <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700">
+                        <h3 class="text-lg font-bold text-blue-700 dark:text-blue-400 flex items-center gap-2 mb-4">
+                            <i class="fas fa-calendar-day"></i> VENERDÌ 8 maggio
+                        </h3>
+                        <div class="relative border-l-2 border-blue-300 dark:border-gray-700 ml-2 pl-6 space-y-2">
+                            <div class="relative py-1">
+                                <div class="timeline-dot bg-blue-500"></div>
+                                <p class="text-xs font-bold text-blue-500 uppercase tracking-tighter">19:00 - 24:00 · Arena Daturi</p>
+                                <p class="font-bold text-sm text-gray-900 dark:text-white">Stand, musica, food & beverages</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sabato -->
+                    <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700">
+                        <h3 class="text-lg font-bold text-blue-700 dark:text-blue-400 flex items-center gap-2 mb-4">
+                            <i class="fas fa-calendar-day"></i> SABATO 9 maggio
+                        </h3>
+                        <div class="relative border-l-2 border-rose-300 dark:border-gray-700 ml-2 pl-6 space-y-6">
+                            <div class="relative">
+                                <div class="timeline-dot bg-rose-500"></div>
+                                <p class="text-xs font-bold text-rose-500 uppercase tracking-tighter">15:00 · Piazza Cavalli</p>
+                                <p class="font-bold text-sm text-gray-900 dark:text-white">Camminata centro storico</p>
+                            </div>
+                            <div class="relative">
+                                <div class="timeline-dot bg-rose-500"></div>
+                                <p class="text-xs font-bold text-rose-500 uppercase tracking-tighter">15:00 · Arena Daturi</p>
+                                <p class="font-bold text-sm text-gray-900 dark:text-white">Apertura Centro Maratona</p>
+                            </div>
+                            <div class="relative">
+                                <div class="timeline-dot bg-rose-500"></div>
+                                <p class="text-xs font-bold text-rose-500 uppercase tracking-tighter">15:00 · Piazza Cavalli</p>
+                                <p class="font-bold text-sm text-gray-900 dark:text-white">100% Progetto Vita (aziende)</p>
+                            </div>
+                            <div class="relative">
+                                <div class="timeline-dot bg-rose-500"></div>
+                                <p class="text-xs font-bold text-rose-500 uppercase tracking-tighter">15:30 · Arena Daturi</p>
+                                <p class="font-bold text-sm text-gray-900 dark:text-white">Giochi in famiglia (bambini)</p>
+                            </div>
+                            <div class="relative">
+                                <div class="timeline-dot bg-rose-500"></div>
+                                <p class="text-xs font-bold text-rose-500 uppercase tracking-tighter">18:00 · Piazza Cavalli</p>
+                                <p class="font-bold text-sm text-gray-900 dark:text-white">Presentazione Top Runner & Pacer</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Domenica -->
+                    <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700">
+                        <h3 class="text-lg font-bold text-blue-700 dark:text-blue-400 flex items-center gap-2 mb-4">
+                            <i class="fas fa-flag-checkered"></i> DOMENICA 10 maggio
+                        </h3>
+                        <div class="relative border-l-2 border-blue-200 dark:border-gray-700 ml-2 pl-6 space-y-6">
+                            <div class="relative">
+                                <div class="timeline-dot bg-blue-800"></div>
+                                <p class="text-xs font-bold text-blue-800 dark:text-blue-400">07:00 · Arena Daturi</p>
+                                <p class="font-bold text-sm text-gray-900 dark:text-white">Riapertura Centro Maratona</p>
+                            </div>
+                            <div class="relative">
+                                <div class="timeline-dot bg-rose-600"></div>
+                                <p class="text-xs font-bold text-rose-600 italic">09:30 · Via Cavour</p>
+                                <p class="font-bold text-base text-rose-600 dark:text-rose-500 uppercase">29ª PHM Partenza</p>
+                            </div>
+                            <div class="relative">
+                                <div class="timeline-dot bg-rose-600"></div>
+                                <p class="text-xs font-bold text-rose-600 italic">09:30 · Via Cavour</p>
+                                <p class="font-bold text-sm text-gray-900 dark:text-white">Partenza Staffetta PHM</p>
+                            </div>
+                            <div class="relative">
+                                <div class="timeline-dot bg-blue-500"></div>
+                                <p class="text-xs font-bold text-blue-500 italic">09:45 · Pubblico Passeggio</p>
+                                <p class="font-bold text-sm text-gray-900 dark:text-white">Minimaratona Pedibus (UNICEF)</p>
+                            </div>
+                            <div class="relative">
+                                <div class="timeline-dot bg-blue-500"></div>
+                                <p class="text-xs font-bold text-blue-500 italic">09:45 · Pubblico Passeggio</p>
+                                <p class="font-bold text-sm text-gray-900 dark:text-white">Camminata associazioni</p>
+                            </div>
+                            <div class="relative">
+                                <div class="timeline-dot bg-rose-700"></div>
+                                <p class="text-xs font-bold text-rose-700">10:30 · Piazza Cavalli</p>
+                                <p class="font-bold text-sm text-gray-900 dark:text-white uppercase">Arrivi & Premiazioni PHM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gara (Ripristinata completa) -->
+            <div id="view-gara" class="view hidden space-y-4">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Dettagli Gara</h2>
+                <div class="bg-blue-900 text-white p-5 rounded-3xl shadow-lg border border-blue-800">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-xs opacity-70 uppercase font-bold">Distanza Mezza</p>
+                            <p class="text-xl font-black">21,097 KM</p>
+                        </div>
+                        <div>
+                            <p class="text-xs opacity-70 uppercase font-bold">Cambio Relay</p>
+                            <p class="text-sm font-bold">KM 12,650</p>
+                        </div>
+                    </div>
+                    <a href="https://www.placentiahalfmarathon.it/29phm/percorso/" target="_blank" class="mt-4 flex items-center justify-center gap-2 bg-white/20 py-2 rounded-xl text-xs font-bold border border-white/30">
+                        <i class="fas fa-map-marked-alt"></i> Vedi Percorso Ufficiale
+                    </a>
+                </div>
+
+                <!-- Pacers -->
+                <div class="bg-white dark:bg-gray-800 p-5 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700">
+                    <h3 class="font-bold text-rose-600 flex items-center gap-2 mb-3"><i class="fas fa-users"></i> Pacers PHM</h3>
+                    <div class="grid grid-cols-4 gap-2">
+                        <button onclick="selectPace('1:30:00')" class="bg-gray-200 dark:bg-gray-700 p-2 rounded-lg text-xs font-bold text-gray-900 dark:text-white">1:30</button>
+                        <button onclick="selectPace('1:35:00')" class="bg-gray-200 dark:bg-gray-700 p-2 rounded-lg text-xs font-bold text-gray-900 dark:text-white">1:35</button>
+                        <button onclick="selectPace('1:40:00')" class="bg-gray-200 dark:bg-gray-700 p-2 rounded-lg text-xs font-bold text-gray-900 dark:text-white">1:40</button>
+                        <button onclick="selectPace('1:45:00')" class="bg-gray-200 dark:bg-gray-700 p-2 rounded-lg text-xs font-bold text-gray-900 dark:text-white">1:45</button>
+                        <button onclick="selectPace('1:50:00')" class="bg-gray-200 dark:bg-gray-700 p-2 rounded-lg text-xs font-bold text-gray-900 dark:text-white">1:50</button>
+                        <button onclick="selectPace('1:55:00')" class="bg-gray-200 dark:bg-gray-700 p-2 rounded-lg text-xs font-bold text-gray-900 dark:text-white">1:55</button>
+                        <button onclick="selectPace('2:00:00')" class="bg-gray-200 dark:bg-gray-700 p-2 rounded-lg text-xs font-bold text-gray-900 dark:text-white">2:00</button>
+                        <button onclick="selectPace('2:30:00')" class="bg-rose-100 dark:bg-rose-900/30 p-2 rounded-lg text-xs font-bold text-rose-600">2:30</button>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 p-5 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700">
+                    <h3 class="font-bold mb-2 flex items-center gap-2 text-blue-600"><i class="fas fa-stopwatch"></i> Calcolatore Ritmi</h3>
+                    <div class="flex gap-2">
+                        <input type="text" id="targetTime" placeholder="es. 1:45:00" class="flex-1 bg-gray-100 dark:bg-gray-700 p-3 rounded-xl focus:outline-none text-gray-900 dark:text-white border-none">
+                        <button onclick="generatePaceStrategy()" class="bg-rose-600 text-white px-4 rounded-xl font-bold shadow-md">Vai</button>
+                    </div>
+                    <div id="paceResult" class="mt-3 text-sm text-gray-600 dark:text-gray-300 italic whitespace-pre-wrap"></div>
+                </div>
+            </div>
+
+            <!-- Iniziative -->
+            <div id="view-iniziative" class="view hidden space-y-4">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Iniziative</h2>
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex gap-3">
+                    <div class="bg-rose-100 dark:bg-rose-900/30 p-3 rounded-xl text-rose-600 shrink-0"><i class="fas fa-hand-holding-heart"></i></div>
+                    <div>
+                        <h4 class="font-bold text-sm">Relay for Ronald</h4>
+                        <p class="text-[11px] text-gray-500 mt-1">Staffetta solidale per Casa Ronald McDonald Milano.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info / Logistica -->
+            <div id="view-info" class="view hidden space-y-4">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Logistica</h2>
+                <div class="bg-white dark:bg-gray-800 p-5 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 space-y-4">
+                    <h4 class="font-bold text-blue-700 text-sm uppercase tracking-wide">Arena Daturi</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Palazzo Farnese. Centro Maratona per ritiro pettorali e deposito borse.</p>
+                    <a href="https://www.placentiahalfmarathon.it/" target="_blank" class="block w-full text-center bg-gray-100 dark:bg-gray-700 py-3 rounded-2xl text-xs font-bold">Sito Ufficiale <i class="fas fa-external-link-alt ml-1"></i></a>
+                </div>
+            </div>
+
+
+        </main>
+
+        <!-- Navigazione (Sempre visibile) -->
+        <nav class="fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-t border-gray-100 dark:border-gray-800 safe-area-bottom z-50 px-2 pb-2">
+            <div class="max-w-md mx-auto flex justify-between py-2">
+                <button onclick="switchView('home')" class="nav-btn flex-1 flex flex-col items-center gap-1 py-1 text-gray-400" id="nav-home">
+                    <i class="fas fa-home text-lg"></i>
+                    <span class="text-[9px] font-bold">Home</span>
+                </button>
+                <button onclick="switchView('programma')" class="nav-btn flex-1 flex flex-col items-center gap-1 py-1 text-gray-400" id="nav-programma">
+                    <i class="fas fa-calendar text-lg"></i>
+                    <span class="text-[9px] font-bold">Eventi</span>
+                </button>
+                <button onclick="switchView('gara')" class="nav-btn flex-1 flex flex-col items-center gap-1 py-1 text-gray-400" id="nav-gara">
+                    <i class="fas fa-route text-lg"></i>
+                    <span class="text-[9px] font-bold">Gara</span>
+                </button>
+                <button onclick="switchView('info')" class="nav-btn flex-1 flex flex-col items-center gap-1 py-1 text-gray-400" id="nav-info">
+                    <i class="fas fa-info-circle text-lg"></i>
+                    <span class="text-[9px] font-bold">Info</span>
+                </button>
+            </div>
+        </nav>
+
+    </div>
+
+    <script>
+        function switchView(viewId) {
+            document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+            document.getElementById(`view-${viewId}`).classList.remove('hidden');
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('nav-active'));
+            document.getElementById(`nav-${viewId}`).classList.add('nav-active');
+            window.scrollTo(0,0);
+        }
+
+        function selectPace(time) {
+            document.getElementById('targetTime').value = time;
+            generatePaceStrategy();
+        }
+
+        function generatePaceStrategy() {
+            const time = document.getElementById('targetTime').value.trim();
+            if (!time) return;
+            const resDiv = document.getElementById('paceResult');
+            const parts = time.split(':').map(Number);
+            let totalSeconds = 0;
+            if (parts.length === 3) totalSeconds = parts[0] * 3600 + parts[1] * 60 + parts[2];
+            else if (parts.length === 2) totalSeconds = parts[0] * 3600 + parts[1] * 60;
+            else { resDiv.innerText = "Formato non valido. Usa es. 1:45:00"; return; }
+            if (isNaN(totalSeconds) || totalSeconds <= 0) { resDiv.innerText = "Orario non valido."; return; }
+            const dist = 21.097;
+            const paceSecPerKm = totalSeconds / dist;
+            const paceMin = Math.floor(paceSecPerKm / 60);
+            const paceSec = Math.round(paceSecPerKm % 60).toString().padStart(2, '0');
+            const at5k = totalSeconds * (5 / dist);
+            const at10k = totalSeconds * (10 / dist);
+            const fmt = s => `${Math.floor(s/3600)}:${Math.floor((s%3600)/60).toString().padStart(2,'0')}:${Math.round(s%60).toString().padStart(2,'0')}`;
+            resDiv.innerText =
+                `Ritmo medio: ${paceMin}:${paceSec} /km\n` +
+                `Ai 5 km:     ${fmt(at5k)}\n` +
+                `Ai 10 km:    ${fmt(at10k)}\n` +
+                `Arrivo:      ${time}`;
+        }
+
+        function updateCountdown() {
+            const target = new Date("May 10, 2026 09:30:00").getTime();
+            const now = new Date().getTime();
+            const diff = target - now;
+            if (diff <= 0) {
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("minutes").innerText = "00";
+                document.querySelector('#countdown').closest('div').querySelector('p').innerText = "La gara è iniziata! 🏃";
+                return;
+            }
+            document.getElementById("days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+            document.getElementById("hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+        }
+        setInterval(updateCountdown, 60000);
+        updateCountdown();
+        window.onload = () => switchView('home');
+    </script>
+</body>
+</html>
