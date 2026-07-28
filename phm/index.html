@@ -648,7 +648,7 @@ const elevData = [40.0, 39.5, 39.1, 37.1, 34.7, 34.7, 35.2, 35.7, 35.7, 36.2, 38
 
         // === WIZARD DOCUMENTI ===
         const wizardSteps = [
-            { id: 'eta', question: 'Sei nato nel 2007 o prima?', info: 'La 21.097km richiede almeno la categoria Juniores (millesimo di nascita 2007 o precedente), come previsto dalle norme FIDAL', type: 'yesno', yes: 'residenza', no: 'result_minore' },
+            { id: 'eta', question: 'Nel 2027 compi (o hai già compiuto) 18 anni?', info: 'Per la 21.097km si considera l\'anno di nascita, non la data esatta, come previsto dalle norme FIDAL', type: 'yesno', yes: 'residenza', no: 'result_minore' },
             { id: 'residenza', question: 'Sei residente in Italia?', type: 'yesno', yes: 'cittadinanza_res', no: 'cittadinanza_noRes' },
             { id: 'cittadinanza_res', question: 'Sei cittadino italiano?', type: 'yesno', yes: 'fidal_itRes', no: 'fidal_strRes' },
             { id: 'fidal_itRes', question: 'Hai la tessera FIDAL in corso di validità?', type: 'yesno', yes: 'result_fidal', no: 'runcard_age_std' },
@@ -662,12 +662,12 @@ const elevData = [40.0, 39.5, 39.1, 37.1, 34.7, 34.7, 35.2, 35.7, 35.7, 36.2, 38
                 { label: '🎽 Turistico-sportiva', sublabel: 'Nessuna tessera richiesta — solo autocertificazione', next: 'result_turistica_autocert' }
             ]},
             { id: 'fedEstera_noRes_comp', question: 'Hai la tessera della federazione di atletica del tuo paese in corso di validità?', type: 'yesno', yes: 'result_fedEstera_health', no: 'runcard_age_foreign' },
-            { id: 'runcard_age_std', question: 'Sei nato nel 2004 o prima?', info: 'La RUNCARD è valida solo per chi ha un millesimo di nascita 2004 o precedente (20 anni e oltre), come previsto dall\'Art. 34 del regolamento RUNCARD', type: 'yesno', yes: 'result_runcard', no: 'result_fidal_only' },
-            { id: 'runcard_age_foreign', question: 'Sei nato nel 2004 o prima?', info: 'La RUNCARD è valida solo per chi ha un millesimo di nascita 2004 o precedente (20 anni e oltre), come previsto dall\'Art. 34 del regolamento RUNCARD', type: 'yesno', yes: 'result_runcard_health', no: 'result_no_runcard_foreign' }
+            { id: 'runcard_age_std', question: 'Nel 2027 compi (o hai già compiuto) 20 anni?', info: 'La RUNCARD è valida solo per chi compie almeno 20 anni nel 2027, considerando l\'anno di nascita e non la data esatta, come previsto dall\'Art. 34 del regolamento RUNCARD', type: 'yesno', yes: 'result_runcard', no: 'result_fidal_only' },
+            { id: 'runcard_age_foreign', question: 'Nel 2027 compi (o hai già compiuto) 20 anni?', info: 'La RUNCARD è valida solo per chi compie almeno 20 anni nel 2027, considerando l\'anno di nascita e non la data esatta, come previsto dall\'Art. 34 del regolamento RUNCARD', type: 'yesno', yes: 'result_runcard_health', no: 'result_no_runcard_foreign' }
         ];
 
         const wizardResults = {
-            result_minore: { ok: false, title: 'Non puoi partecipare', message: 'Per la 21.097km è richiesto un millesimo di nascita 2007 o precedente (categoria Juniores o superiore), come previsto dalle norme FIDAL.', docs: [] },
+            result_minore: { ok: false, title: 'Non puoi partecipare', message: 'Per la 21.097km è necessario compiere almeno 18 anni nel 2027 (si considera l\'anno di nascita, non la data esatta), come previsto dalle norme FIDAL.', docs: [] },
             result_fidal: { ok: true, title: 'Documenti necessari', docs: [
                 { icon: 'fa-id-card', color: 'blue', title: 'Tessera FIDAL', desc: 'In corso di validità' }
             ]},
@@ -696,10 +696,10 @@ const elevData = [40.0, 39.5, 39.1, 37.1, 34.7, 34.7, 35.2, 35.7, 35.7, 36.2, 38
                 { icon: 'fa-credit-card', color: 'green', title: 'RUNCARD', desc: 'In corso di validità' },
                 { icon: 'fa-stethoscope', color: 'rose', title: 'Certificato medico', desc: 'Idoneità agonistica per atletica leggera, valido in Italia', note: 'Non sono ammessi certificati diversi' }
             ], link: { url: 'https://runcard.com/welcome', text: 'Ottieni la RUNCARD →' }},
-            result_fidal_only: { ok: true, title: 'Documenti necessari', message: 'Il tuo millesimo di nascita non è sufficiente per la RUNCARD (richiesto 2004 o precedente): puoi partecipare solo tesserandoti FIDAL.', docs: [
+            result_fidal_only: { ok: true, title: 'Documenti necessari', message: 'La tua età non è sufficiente per la RUNCARD (servono almeno 20 anni nel 2027, considerando l\'anno di nascita): puoi partecipare solo tesserandoti FIDAL.', docs: [
                 { icon: 'fa-id-card', color: 'blue', title: 'Tessera FIDAL', desc: 'Iscriviti a qualsiasi società affiliata FIDAL, inclusa ASD Placentia' }
             ], link: { url: 'https://www.placentiahalfmarathon.it/asd-placentia-home/tesseramento/', text: 'Tesseramento ASD Placentia →' }},
-            result_no_runcard_foreign: { ok: false, title: 'Competitiva non disponibile', message: 'Senza tessera della federazione di atletica del tuo paese e con un millesimo di nascita successivo al 2004 (non idoneo per la RUNCARD), non è possibile partecipare alla 21.097km competitiva. Puoi comunque partecipare alla 21.097km turistico-sportiva, senza tesseramento né certificato medico.', docs: [] }
+            result_no_runcard_foreign: { ok: false, title: 'Competitiva non disponibile', message: 'Senza tessera della federazione di atletica del tuo paese e senza compiere almeno 20 anni nel 2027 (requisito RUNCARD), non è possibile partecipare alla 21.097km competitiva. Puoi comunque partecipare alla 21.097km turistico-sportiva, senza tesseramento né certificato medico.', docs: [] }
         };
 
         let wizardHistory = [];
