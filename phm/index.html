@@ -713,6 +713,14 @@ const elevData = [40.0, 39.5, 39.1, 37.1, 34.7, 34.7, 35.2, 35.7, 35.7, 36.2, 38
             purple: 'bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-700',
             indigo: 'bg-indigo-50 dark:bg-indigo-900/20 border-indigo-200 dark:border-indigo-700'
         };
+        const docIconColors = {
+            blue:   'text-blue-700 dark:text-blue-300',
+            green:  'text-green-700 dark:text-green-300',
+            rose:   'text-rose-700 dark:text-rose-300',
+            amber:  'text-amber-700 dark:text-amber-300',
+            purple: 'text-purple-700 dark:text-purple-300',
+            indigo: 'text-indigo-700 dark:text-indigo-300'
+        };
 
         function renderWizard() {
             const container = document.getElementById('wizard-container');
@@ -747,11 +755,11 @@ const elevData = [40.0, 39.5, 39.1, 37.1, 34.7, 34.7, 35.2, 35.7, 35.7, 36.2, 38
         function renderDocList(docs) {
             return docs.map(doc =>
                 `<div class="flex gap-4 p-4 rounded-2xl border-2 ${docColors[doc.color]}">
-                    <i class="fas ${doc.icon} text-2xl mt-0.5 shrink-0 text-gray-600 dark:text-gray-300"></i>
+                    <i class="fas ${doc.icon} text-2xl mt-0.5 shrink-0 ${docIconColors[doc.color]}"></i>
                     <div>
                         <p class="font-bold text-gray-900 dark:text-white">${doc.title}</p>
                         <p class="text-sm text-gray-600 dark:text-gray-300">${doc.desc}</p>
-                        ${doc.note ? `<p class="text-xs font-semibold mt-1 text-rose-600 dark:text-rose-400">⚠️ ${doc.note}</p>` : ''}
+                        ${doc.note ? `<p class="text-sm font-bold mt-1 text-rose-700 dark:text-rose-300">⚠️ ${doc.note}</p>` : ''}
                     </div>
                 </div>`
             ).join('');
