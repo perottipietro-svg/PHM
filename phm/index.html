@@ -367,17 +367,22 @@
                     <h3 class="font-bold text-sm text-gray-700 dark:text-gray-200 flex items-center gap-2">
                         <i class="fas fa-people-arrows text-green-600"></i> Staffetta · Centro Maratona ↔ zona cambio
                     </h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Il 1° staffettista, dopo la zona cambio, torna a piedi al Centro Maratona; il 2° raggiunge a piedi la zona cambio. È la via più breve indicata dall'organizzazione: circa <strong>un km e mezzo</strong>.</p>
-                    <div id="relay-map" style="height:220px;border-radius:14px;overflow:hidden"></div>
-                    <a href="https://www.google.com/maps/dir/?api=1&origin=45.0573125,9.6974409&destination=45.0569341,9.6767484&waypoints=45.056579,9.697117|45.058610,9.695299|45.058875,9.691088|45.058848,9.686828|45.057530,9.679967&travelmode=walking" target="_blank"
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Il 1° staffettista, dopo la zona cambio, torna a piedi al Centro Maratona; il 2° raggiunge a piedi la zona cambio. Scegli uno dei due percorsi (valgono in entrambe le direzioni).</p>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button id="relay-btn-1" onclick="setRelayRoute(1)" class="rounded-2xl py-2 px-2 text-xs font-bold border-2 border-green-600 text-center text-gray-700 dark:text-gray-200"><span class="block text-sm">Percorso 1</span><span class="block font-normal">ufficiale · <span id="relay-km-1"></span></span></button>
+                        <button id="relay-btn-2" onclick="setRelayRoute(2)" class="rounded-2xl py-2 px-2 text-xs font-bold border-2 border-orange-500 text-center text-gray-700 dark:text-gray-200"><span class="block text-sm">Percorso 2</span><span class="block font-normal">centro storico · <span id="relay-km-2"></span></span></button>
+                    </div>
+                    <p id="relay-desc" class="text-xs text-gray-600 dark:text-gray-300"></p>
+                    <div id="relay-map" style="height:240px;border-radius:14px;overflow:hidden"></div>
+                    <a id="relay-go" href="#" target="_blank"
                        class="flex items-center justify-center gap-2 bg-green-700 text-white py-3 rounded-2xl text-sm font-bold w-full">
                         <i class="fas fa-person-walking"></i> 2° staffettista: Centro Maratona → Zona cambio
                     </a>
-                    <a href="https://www.google.com/maps/dir/?api=1&origin=45.0569341,9.6767484&destination=45.0573125,9.6974409&waypoints=45.057530,9.679967|45.058848,9.686828|45.058875,9.691088|45.058610,9.695299|45.056579,9.697117&travelmode=walking" target="_blank"
+                    <a id="relay-back" href="#" target="_blank"
                        class="flex items-center justify-center gap-2 bg-blue-900 dark:bg-blue-800 text-white py-3 rounded-2xl text-sm font-bold w-full">
                         <i class="fas fa-person-walking"></i> 1° staffettista: Zona cambio → Centro Maratona
                     </a>
-                    <p class="text-[11px] text-gray-400">Le indicazioni di Google Maps seguono il tracciato verde con tappe intermedie: se propone un'altra strada, segui la linea verde della mappa qui sopra.</p>
+                    <p class="text-[11px] text-gray-400">Le indicazioni di Google Maps seguono il percorso scelto con tappe intermedie: se propone un'altra strada, segui la linea colorata della mappa.</p>
                 </div>
 
                 <!-- Staffetta: informazioni -->
@@ -602,6 +607,45 @@
         const centroMaratona = [45.0573125, 9.6974409];
         const zonaCambio = [45.0569341, 9.6767484]; // Via Anguissola 5
 
+        // Percorso 2: Via Campagna, Via San Tomaso, Via San Sisto, Vicolo Imperatrice Angilberga, Piazza Cittadella, Largo Brigata Piacenza
+        const relayWalkRoute2 = [[45.056819,9.676748],[45.05682,9.67704],[45.056819,9.677792],[45.056811,9.677893],[45.056804,9.678055],[45.056784,9.678073],[45.056764,9.678098],[45.05675,9.67813],[45.056742,9.678166],[45.05674,9.678203],[45.056744,9.678241],[45.056755,9.678277],[45.056772,9.678308],[45.056778,9.678531],[45.056771,9.678959],[45.05673,9.678954],[45.056725,9.679039],[45.056724,9.679103],[45.056715,9.679587],[45.056705,9.680153],[45.0567,9.680546],[45.056445,9.680661],[45.056544,9.681219],[45.056547,9.681287],[45.056549,9.681325],[45.05662,9.681326],[45.056631,9.681348],[45.056631,9.681429],[45.056593,9.681604],[45.056648,9.681631],[45.056582,9.681905],[45.056502,9.682145],[45.056234,9.682948],[45.05622,9.682985],[45.055854,9.683985],[45.055434,9.6851],[45.05534,9.685373],[45.055263,9.685704],[45.055155,9.686285],[45.055048,9.686777],[45.054996,9.687004],[45.054902,9.68736],[45.055256,9.687966],[45.055488,9.688237],[45.055589,9.688468],[45.055664,9.688679],[45.056056,9.689918],[45.056426,9.690761],[45.056373,9.690838],[45.056605,9.691359],[45.056391,9.691653],[45.056646,9.692007],[45.056539,9.692148],[45.056251,9.692507],[45.056175,9.692723],[45.056065,9.69317],[45.055949,9.693466],[45.055832,9.693377],[45.055506,9.693831],[45.055767,9.694236],[45.055758,9.694254],[45.055517,9.694622],[45.055256,9.694294],[45.055132,9.694498],[45.055256,9.694294],[45.055517,9.694622],[45.055548,9.69466],[45.055759,9.694928],[45.055711,9.695024],[45.05566,9.695124],[45.055433,9.695515],[45.055343,9.69567],[45.055314,9.695716],[45.055359,9.695773],[45.055365,9.69578],[45.055471,9.695914],[45.055508,9.695958],[45.055571,9.696039],[45.055843,9.696383],[45.055954,9.696436],[45.056041,9.69653],[45.056089,9.696591],[45.056135,9.696644],[45.056267,9.696812],[45.056275,9.696739],[45.056284,9.696599],[45.05632,9.696485],[45.056379,9.6964],[45.05632,9.696485],[45.056284,9.696599],[45.056275,9.696739],[45.056267,9.696812],[45.056257,9.696912],[45.056218,9.697021],[45.055843,9.697671],[45.055957,9.697809],[45.055967,9.697821],[45.056562,9.698565],[45.057127,9.699288],[45.05716,9.69932],[45.057211,9.699334],[45.057262,9.699336],[45.057299,9.699331],[45.057333,9.699319],[45.057368,9.699306],[45.057409,9.699274],[45.057433,9.699223],[45.057452,9.699168],[45.057465,9.699071],[45.057466,9.698986],[45.057472,9.698945],[45.057667,9.698443],[45.057881,9.697855]];
+        const relayWaypoints = {
+            1: ['45.056579,9.697117','45.058610,9.695299','45.058875,9.691088','45.058848,9.686828','45.057530,9.679967'],
+            2: ['45.0563785,9.6963996','45.0551319,9.6944979','45.0559485,9.6934663','45.0566456,9.6920073','45.0564258,9.6907608','45.0551553,9.6862846','45.0566481,9.681631']
+        };
+        const relayInfo = {
+            1: { color: '#16a34a', desc: 'Percorso ufficiale indicato dall\'organizzazione (linea verde), a nord del centro storico.' },
+            2: { color: '#f97316', desc: 'Passa per il centro storico (linea arancione): Largo Brigata Piacenza, Piazza Cittadella, Vicolo Imperatrice Angilberga, Via San Sisto, Via San Tomaso, Via Campagna.' }
+        };
+        function routeKm(pts) {
+            let m = 0;
+            for (let i = 1; i < pts.length; i++) m += L.latLng(pts[i-1]).distanceTo(L.latLng(pts[i]));
+            return m;
+        }
+        const relayKm = { 1: routeKm(relayWalkRoute), 2: routeKm(relayWalkRoute2) };
+        const fmtKm = m => (m/1000).toFixed(1).replace('.', ',') + ' km';
+        let relayLines = {};
+        let relayMap = null;
+
+        function setRelayRoute(n) {
+            [1, 2].forEach(i => {
+                const btn = document.getElementById('relay-btn-' + i);
+                const on = i === n;
+                btn.classList.toggle('bg-green-100', on && i === 1);
+                btn.classList.toggle('bg-orange-100', on && i === 2);
+                btn.classList.toggle('!text-gray-900', on);
+                btn.style.opacity = on ? '1' : '0.6';
+                if (relayLines[i]) relayLines[i].setStyle({ weight: on ? 6 : 3, opacity: on ? 0.95 : 0.45 });
+            });
+            if (relayLines[n]) { relayMap.invalidateSize(); relayLines[n].bringToFront(); relayMap.fitBounds(relayLines[n].getBounds(), { padding: [24,24] }); }
+            document.getElementById('relay-desc').textContent = relayInfo[n].desc + ' Distanza: circa ' + fmtKm(relayKm[n]) + '.';
+            const wp = relayWaypoints[n];
+            const base = 'https://www.google.com/maps/dir/?api=1&travelmode=walking';
+            const cm = '45.0573125,9.6974409', cb = '45.0569341,9.6767484';
+            document.getElementById('relay-go').href = base + '&origin=' + cm + '&destination=' + cb + '&waypoints=' + wp.join('|');
+            document.getElementById('relay-back').href = base + '&origin=' + cb + '&destination=' + cm + '&waypoints=' + wp.slice().reverse().join('|');
+        }
+
         function relayMarkers(map) {
             L.marker(zonaCambio, {
                 icon: L.divIcon({className:'', html:'<div class="relay-label">⬡ Zona cambio km 12,650</div>', iconSize:[130,22], iconAnchor:[65,11]})
@@ -609,20 +653,21 @@
             L.marker(centroMaratona, {
                 icon: L.divIcon({className:'', html:'<div style="font-size:22px;line-height:1">🏟️</div>', iconSize:[24,24], iconAnchor:[12,12]})
             }).bindPopup('<b>🏟️ Centro Maratona</b><br>Arena Daturi · Viale Risorgimento').addTo(map);
-            L.polyline(relayWalkRoute, { color: '#16a34a', weight: 5, opacity: 0.95 })
-                .bindPopup('<b>Via più breve a piedi</b><br>Centro Maratona ↔ zona cambio · circa un km e mezzo').addTo(map);
         }
 
-        let relayMap = null;
         function initRelayMap() {
             const el = document.getElementById('relay-map');
             if (!el) return;
+            [1, 2].forEach(i => document.getElementById('relay-km-' + i).textContent = fmtKm(relayKm[i]));
             if (relayMap) { relayMap.invalidateSize(); return; }
             relayMap = L.map('relay-map', { zoomControl: true, attributionControl: false });
+            relayMap.setView(centroMaratona, 14);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(relayMap);
-            L.polyline(routeCoords, { color: '#e11d48', weight: 4, opacity: 0.7 }).addTo(relayMap);
+            L.polyline(routeCoords, { color: '#e11d48', weight: 4, opacity: 0.6 }).addTo(relayMap);
+            relayLines[1] = L.polyline(relayWalkRoute, { color: relayInfo[1].color }).bindPopup(() => '<b>Percorso 1</b> · circa ' + fmtKm(relayKm[1])).addTo(relayMap);
+            relayLines[2] = L.polyline(relayWalkRoute2, { color: relayInfo[2].color }).bindPopup(() => '<b>Percorso 2</b> · circa ' + fmtKm(relayKm[2])).addTo(relayMap);
             relayMarkers(relayMap);
-            relayMap.fitBounds(L.polyline(relayWalkRoute).getBounds(), { padding: [24,24] });
+            setRelayRoute(1);
         }
 
         function initPHMMap() {
