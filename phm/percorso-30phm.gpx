@@ -9,14 +9,14 @@
   </metadata>
 
   <trk>
-    <name>Percorso 30 PHM 2027 (partenza Via Cavour 60)</name>
+    <name>Percorso 30 PHM 2027 (partenza Via Cavour 64)</name>
     <extensions>
       <gpxx:TrackExtension>
         <gpxx:DisplayColor>Red</gpxx:DisplayColor>
       </gpxx:TrackExtension>
     </extensions>
     <trkseg>
-      <trkpt lat="45.053986899999998" lon="9.695271699999999">
+      <trkpt lat="45.054250600000003" lon="9.695597100000001">
         <ele>40.030000000000001</ele>
       </trkpt>
       <trkpt lat="45.054957205429673" lon="9.696441404521465">
